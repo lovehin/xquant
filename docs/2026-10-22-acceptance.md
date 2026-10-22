@@ -62,7 +62,15 @@
 - 回测的债券端按票息逐日计息，未计入债券价格波动，属简化模型。
 - 配置建议为固定规则映射，**不构成投资建议**。
 
-## 7. 复现步骤
+## 7. GitHub Pages 静态版
+
+- 地址：https://lovehin.github.io/xquant/
+- 构建方式：`python -m xquant.cli static --out site` → 预生成 `data/bundle.js`（`window.XQ_STATIC`，约 1MB，24 条序列共用一条 5161 天的日期轴）
+- 前端同一份 `app.js`：检测到 `window.XQ_STATIC` 就用静态数据，否则请求 `/api/*`
+- workflow 的 `deploy-pages` job 在数据更新后自动构建并部署（只读；无「刷新数据」按钮）
+- 已实测：workflow run 39764475319 两个 job 均 success，线上 PE/ERP/分位与仓库数据一致
+
+## 8. 复现步骤
 
 ```bash
 uv venv --python 3.12 .venv

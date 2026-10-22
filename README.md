@@ -6,6 +6,13 @@
 
 ![界面](docs/screenshot.png)
 
+## 在线查看（GitHub Pages）
+
+**https://lovehin.github.io/xquant/**
+
+静态版：数据在每个交易日 16:30 由 GitHub Actions 抓取后预生成成 `bundle.js` 并自动部署，只读、无需后端。
+本地版（`xquant.cli serve`）多一个「刷新数据」按钮，可随时手动抓取。
+
 ## 快速开始
 
 ```bash
@@ -57,6 +64,7 @@ python3.12 -m venv .venv
 - **GitHub Actions**（主方案）：`.github/workflows/update.yml`，交易日北京时间 16:30 抓数并提交 `data/`。首次使用需把本仓库推到你自己的 GitHub 仓库。
 - **本机 launchd**（备选）：`bash scripts/install_launchd.sh`
 - **手动刷新**：页面右上角「刷新数据」按钮，或 `.venv/bin/python -m xquant.cli update`
+- **GitHub Pages**：workflow 的 `deploy-pages` job 会用最新数据构建静态站并部署（只读）
 
 ## 目录结构
 
@@ -69,7 +77,8 @@ xquant/metrics.py    指标纯函数
 xquant/pipeline.py   抓取→落库→指标→发布
 xquant/server.py     FastAPI
 xquant/cli.py        命令行
-web/                 单页前端（ECharts 本地 vendor，不依赖 CDN）
+web/                 单页前端（ECharts 本地 vendor，不依赖 CDN；支持 API / 静态双模式）
+xquant/static_site.py  GitHub Pages 静态版构建（预生成 bundle.js）
 tests/               pytest 单测（53 个）
 ```
 
@@ -79,7 +88,8 @@ tests/               pytest 单测（53 个）
 .venv/bin/python -m xquant.cli update          # 抓数 + 算指标 + 发布
 .venv/bin/python -m xquant.cli update --no-network   # 只用已有数据重算
 .venv/bin/python -m xquant.cli serve --port 8848
-.venv/bin/python -m xquant.cli export          # 只导出发布产物
+.venv/bin/python -m xquant.cli export          # 重算指标 + 导出发布产物
+.venv/bin/python -m xquant.cli static          # 构建 GitHub Pages 静态站点到 site/
 .venv/bin/python -m xquant.cli status          # 查看各数据源状态
 .venv/bin/python -m xquant.cli backfill        # 回填中证 PE 日频历史
 .venv/bin/python -m pytest -q                  # 跑测试
