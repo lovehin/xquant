@@ -3143,3 +3143,22 @@ git commit -m "docs: 端到端验收记录"
 1. `git remote add origin <你的仓库地址>` 并 `git push -u origin main`（仓库名由用户提供，Task 12 的 workflow 不依赖仓库名）
 2. 在 GitHub 仓库 Settings → Actions 启用 workflow；如需手动触发用 workflow_dispatch
 3. 如选本机定时：`bash scripts/install_launchd.sh`
+
+---
+
+## 附：实施偏差记录（2026-10-22 执行完成）
+
+计划在实施过程中出现以下偏差，均已在代码中落地并在 `docs/2026-10-22-acceptance.md` 记录：
+
+| # | 偏差 | 原因与处理 |
+|---|---|---|
+| 1 | 中债改为**分块并发**抓取（330 天/块，4 线程） | 中债接口单次查询跨度必须 < 1 年，超范围返回空表；全历史回补从 20 分钟降到 77 秒 |
+| 2 | 中债改**增量**抓取（从库中最后日期前推 10 天） | 日常跑批只需 1 块（约 12 秒） |
+| 3 | 新增 `source=csindex_pe` | `index-perf` 的 `peg`（主 PE 口径）与 `indicator.xls` 的估值快照必须分表存，否则同日互相覆盖 |
+| 4 | 新增市场级股息率序列（MKT_SH/SZ/GEM/STAR） | 指数级股息率只有 20 日窗口，市场级有 2005→ 长历史，作为替代视角 |
+| 5 | 发布产物从 `market.db` 改为 `series.csv + snapshot.json` | 48MB 的 SQLite 每日提交会撑爆仓库；文本快照首提交 3.3MB、日常增量仅几十行 |
+| 6 | 服务端增加「bundle 自动导入」+ 本地优先保护 | 支持 git pull 后直接生效；本地跑批后不被旧快照覆盖 |
+| 7 | 指标写入改为**整段重写**（先 delete 再 insert） | 数据清洗后旧行会残留（如中证1000 的 2012 起旧数据） |
+| 8 | 新增 PE 清洗（局部中位数离群点 + 发布前断点截断） | 中证 `peg` 在指数发布前与个别交易日有脏值 |
+| 9 | 新增 `/api/compare`、`/api/allocation`（含规则回测） | 计划只列了 snapshot/series/style/health，前端需要多指数对比与仓位建议 |
+| 10 | 测试数 62 个（计划估计 40+） | 补充了 bundle、PE 清洗、bundle 导入保护等用例 |
