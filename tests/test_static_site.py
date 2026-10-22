@@ -63,3 +63,28 @@ def test_frontend_supports_static_mode():
     js = (static_site.WEB_DIR / "app.js").read_text(encoding="utf-8")
     assert "window.XQ_STATIC" in js
     assert "XQ_STATIC" in js and "静态版" in js
+
+
+def test_pe_comes_from_published_snapshot_when_db_restored_from_bundle(tmp_path):
+    """部署环境从 series.csv 还原数据库时，PE 应取自已发布的 snapshot.json。"""
+    import json as _json
+
+    from xquant import bundle
+
+    source = tmp_path / "src.db"
+    conn = store.connect(source)
+    store.init_db(conn)
+    _seed(conn)
+    pipeline.compute_metrics(conn)
+    bundle.write_bundle(conn, tmp_path / "series.csv")
+    snap = pipeline.snapshot_payload(conn)
+    snap["indexes"][0]["pe"] = 12.77          # 发布快照里有 PE
+    (tmp_path / "snapshot.json").write_text(_json.dumps(snap, ensure_ascii=False), encoding="utf-8")
+    conn.close()
+
+    site = static_site.build(tmp_path / "site", db_path=tmp_path / "fresh.db",
+                             bundle_path=tmp_path / "series.csv",
+                             snapshot_path=tmp_path / "snapshot.json")
+    data = _bundle(site)
+    assert data["snapshot"]["indexes"][0]["pe"] == 12.77
+    assert data["snapshot"]["indexes"][0]["erp"] is not None

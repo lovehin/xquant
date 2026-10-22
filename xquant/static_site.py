@@ -13,12 +13,17 @@ from pathlib import Path
 
 from xquant import bundle, pipeline, store
 from xquant.config import (ALLOCATION_MAP, BACKTEST_INDEX, BUNDLE_PATH, DB_PATH, INDEXES,
-                           MARKET_DIVIDEND_SERIES, WEB_DIR)
+                           MARKET_DIVIDEND_SERIES, SNAPSHOT_PATH, WEB_DIR)
 
 
-def build_bundle_data(conn) -> dict:
-    """把库里前端需要的序列整理成一个可序列化的字典。"""
-    snapshot = pipeline.snapshot_payload(conn)
+def build_bundle_data(conn, snapshot: dict | None = None) -> dict:
+    """把库里前端需要的序列整理成一个可序列化的字典。
+
+    snapshot 可传入已发布的 `data/snapshot.json`：静态构建时数据库可能是从
+    `series.csv` 还原的（不含 PE 序列），此时当前 PE/分位应以发布快照为准。
+    """
+    if snapshot is None:
+        snapshot = pipeline.snapshot_payload(conn)
 
     raw: dict[str, list[tuple[str, float]]] = {}
     for spec in INDEXES:
@@ -83,7 +88,8 @@ def _relative_index_html(html: str) -> str:
 
 
 def build(out_dir: str | Path, db_path: str | Path | None = None,
-          bundle_path: str | Path | None = None) -> Path:
+          bundle_path: str | Path | None = None,
+          snapshot_path: str | Path | None = None) -> Path:
     out = Path(out_dir)
     if out.exists():
         shutil.rmtree(out)
@@ -105,7 +111,12 @@ def build(out_dir: str | Path, db_path: str | Path | None = None,
             if source.exists():
                 bundle.import_bundle(conn, source)
         pipeline.ensure_percentiles(conn)
-        payload = build_bundle_data(conn)
+        # 数据库若没有 PE（多为从 series.csv 还原），用已发布的 snapshot.json
+        published = None
+        snap_file = Path(snapshot_path or SNAPSHOT_PATH)
+        if not store.fetch_metric(conn, BACKTEST_INDEX, "pe") and snap_file.exists():
+            published = json.loads(snap_file.read_text(encoding="utf-8"))
+        payload = build_bundle_data(conn, snapshot=published)
     finally:
         conn.close()
 
