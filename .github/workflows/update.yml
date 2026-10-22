@@ -9,6 +9,9 @@ concurrency:
   group: update-market-data
   cancel-in-progress: false
 
+permissions:
+  contents: write   # 需要回写 data/series.csv 与 data/snapshot.json
+
 jobs:
   update:
     runs-on: ubuntu-latest
