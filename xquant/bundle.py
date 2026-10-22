@@ -76,11 +76,13 @@ def write_bundle(conn, path: str | Path) -> Path:
         rows.append((f"price:{r['index_code']}", r["date"], float(r["close"])))
 
     rows.sort(key=lambda x: (x[0], x[1]))
-    with path.open("w", encoding="utf-8", newline="") as f:
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    with tmp.open("w", encoding="utf-8", newline="") as f:
         writer = csv.writer(f, lineterminator="\n")
         writer.writerow(SERIES_HEADER)
         for series_id, date, value in rows:
             writer.writerow([series_id, date, f"{value:.6f}".rstrip("0").rstrip(".") or "0"])
+    tmp.replace(path)  # 原子替换，避免读到半截文件
     return path
 
 

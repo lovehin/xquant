@@ -77,3 +77,20 @@ def test_bundle_is_imported_into_db(tmp_path):
     r = client.get("/api/series", params={"index": "000300", "metric": "erp"})
     assert r.status_code == 200
     assert len(r.json()["points"]) == 10
+
+
+def test_local_run_wins_over_stale_bundle(tmp_path):
+    """本地刚跑过批时，旧 bundle 不应把新指标覆盖回去。"""
+    import time
+    client = make_client(tmp_path)
+    db = tmp_path / "t.db"
+    conn = store.connect(db)
+    store.init_db(conn)
+    store.upsert_metric(conn, [
+        {"index_code": "000300", "date": "2026-01-02", "metric": "erp", "value": 99.0,
+         "freq": "daily", "source": "master"}])
+    store.set_meta(conn, "last_run_ts", str(time.time() + 10))
+    conn.close()
+
+    r = client.get("/api/series", params={"index": "000300", "metric": "erp"})
+    assert r.json()["points"][0][1] == 99.0

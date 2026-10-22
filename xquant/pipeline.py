@@ -445,5 +445,6 @@ def run(conn, bond_key: str = DEFAULT_BOND_BENCHMARK, with_network: bool = True,
     if progress:
         progress(f"已导出 {bundle_path}")
     store.set_meta(conn, "last_run", datetime.now(CST).isoformat(timespec="seconds"))
+    store.set_meta(conn, "last_run_ts", str(time.time()))
     store.set_meta(conn, "last_bond_benchmark", bond_key)
     return {"quality": quality, "summary": summary}

@@ -35,7 +35,11 @@ def create_app(db_path: str | Path | None = None,
         return c
 
     def sync_bundle(c) -> None:
-        """series.csv 比库里新时导入（git pull 后自动生效）。"""
+        """series.csv 比库里新时导入（git pull 后自动生效）。
+
+        保护：若本地刚跑过批（last_run_ts 更新），说明库里的数据比 bundle 新，
+        此时不导入，避免旧快照覆盖刚算出的指标。
+        """
         if not bundle_file.exists():
             return
         ctime = bundle_file.stat().st_mtime
@@ -45,6 +49,13 @@ def create_app(db_path: str | Path | None = None,
         except (TypeError, ValueError):
             last_ts = 0.0
         if ctime <= last_ts:
+            return
+        local_ts = store.get_meta(c, "last_run_ts", "0")
+        try:
+            local_run = float(local_ts)
+        except (TypeError, ValueError):
+            local_run = 0.0
+        if local_run > ctime:
             return
         n = bundle.import_bundle(c, bundle_file)
         store.set_meta(c, "bundle_imported_at", str(ctime))
