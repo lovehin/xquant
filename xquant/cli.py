@@ -77,6 +77,17 @@ def cmd_backfill(args) -> int:
     return 0
 
 
+def cmd_static(args) -> int:
+    """构建 GitHub Pages 静态版站点。"""
+    from xquant import static_site
+
+    out = static_site.build(args.out)
+    size = sum(f.stat().st_size for f in out.rglob("*") if f.is_file())
+    print(f"静态站点已生成：{out.resolve()}（{size / 1024:.0f} KB）")
+    print(f"本地预览：.venv/bin/python -m http.server 8899 --directory {out}")
+    return 0
+
+
 def cmd_status(args) -> int:
     conn = store.connect(DB_PATH)
     store.init_db(conn)
@@ -117,6 +128,10 @@ def main(argv=None) -> int:
     p = sub.add_parser("backfill", help="回填中证 PE 日频历史")
     p.add_argument("--start", default="20050101")
     p.set_defaults(func=cmd_backfill)
+
+    p = sub.add_parser("static", help="构建 GitHub Pages 静态版站点")
+    p.add_argument("--out", default="site", help="输出目录（默认 site/）")
+    p.set_defaults(func=cmd_static)
 
     p = sub.add_parser("status", help="查看数据状态")
     p.set_defaults(func=cmd_status)

@@ -1,7 +1,13 @@
-/* xquant 前端：浅色简洁仪表盘 */
+/* xquant 前端：浅色简洁仪表盘
+ *
+ * 两种数据来源：
+ *   1. 本地服务：fetch /api/*
+ *   2. GitHub Pages 静态版：window.XQ_STATIC（由 `python -m xquant.cli static` 预生成）
+ */
 (function () {
   "use strict";
 
+  const STATIC = window.XQ_STATIC || null;
   const state = { snapshot: null, indexes: [], charts: {} };
 
   const fmt = (v, digits = 2) =>
@@ -15,6 +21,39 @@
     if (!r.ok) throw new Error(url + " → " + r.status);
     return r.json();
   }
+
+  function staticSeries(id) {
+    const arr = STATIC.series[id];
+    if (!arr) return [];
+    const out = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] !== null && arr[i] !== undefined) out.push([STATIC.dates[i], arr[i]]);
+    }
+    return out;
+  }
+
+  const dataSnapshot = () => (STATIC ? Promise.resolve(STATIC.snapshot) : getJSON("/api/snapshot"));
+
+  async function dataSeries(index, metric) {
+    if (!STATIC) return getJSON(`/api/series?index=${index}&metric=${metric}`);
+    const id = metric === "dy_spread" ? `dy:${index}` : `${metric}:${index}`;
+    const points = staticSeries(id);
+    if (!points.length) throw new Error(`no data for ${index}/${metric}`);
+    return { index_code: index, metric, points };
+  }
+
+  async function dataCompare() {
+    if (!STATIC) return getJSON("/api/compare?metric=erp");
+    const series = STATIC.snapshot.indexes
+      .map((i) => ({ code: i.code, name: i.name, group: i.group, points: staticSeries(`erp:${i.code}`) }))
+      .filter((s) => s.points.length);
+    return { metric: "erp", series };
+  }
+
+  const dataStyle = () => (STATIC ? Promise.resolve(STATIC.style) : getJSON("/api/style"));
+  const dataAllocation = () =>
+    STATIC ? Promise.resolve(STATIC.allocation) : getJSON("/api/allocation");
+  const dataHealth = () => (STATIC ? Promise.resolve(STATIC.health) : getJSON("/api/health"));
 
   function renderCards(snap) {
     document.getElementById("cards").innerHTML = snap.indexes
@@ -62,7 +101,7 @@
   async function renderERP() {
     const code = document.getElementById("erp-index").value;
     const win = document.getElementById("erp-window").value;
-    const data = await getJSON(`/api/series?index=${code}&metric=erp`);
+    const data = await dataSeries(code, "erp");
     const points = data.points;
     const values = points.map((p) => p[1]);
     const c = chart("chart-erp");
@@ -96,7 +135,7 @@
     const c = chart("chart-dy");
     let data;
     try {
-      data = await getJSON(`/api/series?index=${code}&metric=dy_spread`);
+      data = await dataSeries(code, "dy_spread");
     } catch (e) {
       c.clear();
       document.getElementById("dy-caption").textContent = "该指数暂无股息率数据。";
@@ -120,7 +159,7 @@
   }
 
   async function renderCompare() {
-    const data = await getJSON("/api/compare?metric=erp");
+    const data = await dataCompare();
     const palette = ["#2563eb", "#dc2626", "#16a34a", "#d97706", "#7c3aed", "#0891b2", "#be185d", "#4d7c0f", "#0f766e", "#a16207"];
     const c = chart("chart-compare");
     const dates = data.series.length ? data.series[0].points.map((p) => p[0]) : [];
@@ -146,7 +185,7 @@
   }
 
   async function renderStyle() {
-    const data = await getJSON("/api/style");
+    const data = await dataStyle();
     const c = chart("chart-style");
     const points = data.points || [];
     c.setOption({
@@ -170,7 +209,7 @@
   }
 
   async function renderAllocation() {
-    const data = await getJSON("/api/allocation");
+    const data = await dataAllocation();
     const rows = data.items
       .filter((i) => i.erp !== null)
       .map((i) => `<tr><td>${i.name}</td><td>${fmt(i.erp)}</td><td>${fmt(i.percentile, 0)}%</td>
@@ -202,7 +241,7 @@
   }
 
   async function renderHealth() {
-    const data = await getJSON("/api/health");
+    const data = await dataHealth();
     const rows = (data.quality || [])
       .map((q) => `<tr><td>${q.source}</td><td>${q.status === "ok" ? "正常" : "失败"}</td><td>${q.rows ?? ""}</td>
         <td>${q.ts || ""}</td><td style="text-align:left">${(q.message || "").slice(0, 60)}</td></tr>`)
@@ -240,7 +279,7 @@
   }
 
   async function renderAll() {
-    state.snapshot = await getJSON("/api/snapshot");
+    state.snapshot = await dataSnapshot();
     renderCards(state.snapshot);
     fillIndexSelects(state.snapshot.indexes);
     await Promise.all([
@@ -250,25 +289,33 @@
 
   document.addEventListener("DOMContentLoaded", async () => {
     const btn = document.getElementById("refresh-btn");
-    btn.addEventListener("click", async () => {
+    if (STATIC) {
+      // 静态版（GitHub Pages）没有后端，只展示自动更新的数据
+      btn.textContent = "静态版 · 数据每日自动更新";
       btn.disabled = true;
-      btn.textContent = "抓取中…";
-      try {
-        await fetch("/api/refresh", { method: "POST" });
-        const timer = setInterval(async () => {
-          const h = await getJSON("/api/health");
-          if (h.refresh && !h.refresh.running) {
-            clearInterval(timer);
-            btn.disabled = false;
-            btn.textContent = "刷新数据";
-            await renderAll();
-          }
-        }, 2000);
-      } catch (err) {
-        btn.disabled = false;
-        btn.textContent = "刷新数据";
-      }
-    });
+      btn.style.opacity = "0.75";
+      btn.style.cursor = "default";
+    } else {
+      btn.addEventListener("click", async () => {
+        btn.disabled = true;
+        btn.textContent = "抓取中…";
+        try {
+          await fetch("/api/refresh", { method: "POST" });
+          const timer = setInterval(async () => {
+            const h = await getJSON("/api/health");
+            if (h.refresh && !h.refresh.running) {
+              clearInterval(timer);
+              btn.disabled = false;
+              btn.textContent = "刷新数据";
+              await renderAll();
+            }
+          }, 2000);
+        } catch (err) {
+          btn.disabled = false;
+          btn.textContent = "刷新数据";
+        }
+      });
+    }
     try {
       await renderAll();
     } catch (err) {

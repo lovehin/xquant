@@ -285,6 +285,37 @@ def compute_metrics(conn, bond_key: str = DEFAULT_BOND_BENCHMARK) -> dict:
     return {"indices": len(INDEXES), "bond": bench.key, "days": len(days)}
 
 
+def ensure_percentiles(conn) -> int:
+    """当库里只有 ERP 序列（例如从 series.csv 导入）时，补算分位序列。"""
+    filled = 0
+    for spec in INDEXES:
+        erp = store.fetch_metric(conn, spec.code, "erp")
+        if not erp or store.fetch_metric(conn, spec.code, "erp_pct_10y"):
+            continue
+        values = [v for _, v in erp]
+        for wname, wsize in PERCENTILE_WINDOWS.items():
+            pcts = metrics.percentile_series(values, wsize)
+            store.delete_metric(conn, spec.code, f"erp_pct_{wname}")
+            store.upsert_metric(conn, [
+                {"index_code": spec.code, "date": d, "metric": f"erp_pct_{wname}",
+                 "value": p, "freq": "daily", "source": "master"}
+                for (d, _), p in zip(erp, pcts) if p is not None
+            ])
+        filled += 1
+
+    spread = store.fetch_metric(conn, "STYLE_500_1000", "style_spread")
+    if spread and not store.fetch_metric(conn, "STYLE_500_1000", "style_pct"):
+        values = [v for _, v in spread]
+        pcts = metrics.percentile_series(values, PERCENTILE_WINDOWS["10y"])
+        store.delete_metric(conn, "STYLE_500_1000", "style_pct")
+        store.upsert_metric(conn, [
+            {"index_code": "STYLE_500_1000", "date": d, "metric": "style_pct",
+             "value": p, "freq": "daily", "source": "master"}
+            for (d, _), p in zip(spread, pcts) if p is not None
+        ])
+    return filled
+
+
 def _dividend_spread_rows(conn, index_code: str, bond_map: dict) -> list[dict]:
     rows = []
     for d, dy in _dividend_series(conn, index_code):

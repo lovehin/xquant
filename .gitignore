@@ -9,3 +9,6 @@ data/market.db-journal
 data/market.db-wal
 data/market.db-shm
 data/*.log
+
+# GitHub Pages 构建产物
+site/
