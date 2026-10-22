@@ -50,3 +50,17 @@ def test_parse_indicator_handles_missing_columns(tmp_path):
     rows = csindex.parse_indicator(path.read_bytes(), "000300")
     assert rows[0]["pe_total_shares"] is None
     assert rows[0]["dividend_yield"] is None
+
+
+def test_parse_yield_curve_long_format():
+    import pandas as pd
+    from xquant.sources import chinabond
+    df = pd.DataFrame({
+        "曲线名称": ["中债国债收益率曲线", "中债国债收益率曲线"],
+        "日期": [pd.Timestamp("2026-10-21"), pd.Timestamp("2026-10-20")],
+        "3月": [1.4, 1.41], "10年": [1.68, 1.7], "30年": [1.95, 1.96],
+    })
+    rows = chinabond.parse_yield_curve(df)
+    assert {"curve": "中债国债收益率曲线", "date": "2026-10-21", "tenor": "10年",
+            "yield": 1.68} in rows
+    assert len(rows) == 6  # 2 天 × 3 个期限

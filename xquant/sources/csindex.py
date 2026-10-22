@@ -73,9 +73,9 @@ def parse_indicator(content: bytes, index_code: str) -> list[dict]:
 
 
 def fetch_perf(index_code: str, start: str = "20050101", end: str | None = None) -> list[dict]:
-    end = end or date.today().strftime("%Y%m%d")
+    end_date = end or date.today().strftime("%Y%m%d")
     payload = http_get_json(PERF_URL, params={
-        "indexCode": index_code, "startDate": start, "endDate": end}, timeout=60)
+        "indexCode": index_code, "startDate": start, "endDate": end_date}, timeout=60)
     return parse_perf(payload)
 
 

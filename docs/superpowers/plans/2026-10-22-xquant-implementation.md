@@ -1166,7 +1166,7 @@ def test_parse_yield_curve_long_format():
     rows = chinabond.parse_yield_curve(df)
     assert {"curve": "中债国债收益率曲线", "date": "2026-10-21", "tenor": "10年",
             "yield": 1.68} in rows
-    assert len(rows) == 4  # 2 天 × 2 个期限
+    assert len(rows) == 6  # 2 天 × 3 个期限
 ```
 
 - [ ] **Step 2: 运行测试确认失败**
