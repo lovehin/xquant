@@ -73,3 +73,15 @@ def test_bundle_file_is_sorted_and_compact(tmp_path):
     ids = [ln.split(",")[0] for ln in lines[1:]]
     assert ids == sorted(ids)
     assert "erp:000300,2026-01-02,6.63" in lines
+
+def test_prices_deduped_across_sources(tmp_path):
+    """同一日期存在 csindex 与 bundle 两种来源时，导出只保留一条（csindex 优先）。"""
+    conn = store.connect(":memory:")
+    store.init_db(conn)
+    store.upsert_price(conn, [
+        {"index_code": "000300", "date": "2026-01-02", "close": 4000.0, "source": "bundle"},
+        {"index_code": "000300", "date": "2026-01-02", "close": 4010.0, "source": "csindex"},
+    ])
+    path = bundle.write_bundle(conn, tmp_path / "series.csv")
+    data = bundle.read_bundle(path)
+    assert data["price:000300"] == [("2026-01-02", 4010.0)]

@@ -70,9 +70,15 @@ def write_bundle(conn, path: str | Path) -> Path:
             continue
         rows.append((_bond_id(r["curve"], r["tenor"]), r["date"], float(r["yield"])))
 
+    # 行情可能因 bundle 导入存在多来源重复行，导出时按日期去重（csindex 优先）
+    seen_dates: set[str] = set()
     for r in conn.execute(
-            "SELECT index_code, date, close FROM index_price WHERE close IS NOT NULL"
-            " AND index_code=? ORDER BY index_code, date", (BACKTEST_INDEX,)):
+            "SELECT index_code, date, close, source FROM index_price WHERE close IS NOT NULL"
+            " AND index_code=? ORDER BY index_code, date,"
+            " CASE source WHEN 'csindex' THEN 0 ELSE 1 END", (BACKTEST_INDEX,)):
+        if r["date"] in seen_dates:
+            continue
+        seen_dates.add(r["date"])
         rows.append((f"price:{r['index_code']}", r["date"], float(r["close"])))
 
     rows.sort(key=lambda x: (x[0], x[1]))
