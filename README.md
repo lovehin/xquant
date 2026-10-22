@@ -15,6 +15,13 @@ uv pip install --python .venv/bin/python -r requirements.txt
 .venv/bin/python -m xquant.cli serve       # 打开 http://127.0.0.1:8848
 ```
 
+没有 `uv` 的话用标准库 venv：
+
+```bash
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+```
+
 ## 指标口径
 
 | 指标 | 定义 |
