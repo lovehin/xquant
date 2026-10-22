@@ -64,6 +64,17 @@ INDEXES: list[IndexSpec] = [
 # 乐咕乐股指数 PE 的 symbol → 中证代码映射（乐咕只支持部分指数）
 LEGULEGU_SYMBOL_TO_CODE = {i.legulegu_symbol: i.code for i in INDEXES if i.legulegu_symbol}
 
+# 中证代码 → 乐咕乐股 symbol（抓取时用）
+LEGULEGU_CODE_TO_SYMBOL = {i.code: i.legulegu_symbol for i in INDEXES if i.legulegu_symbol}
+
+# 市场层面股息率序列（乐咕乐股，日频 2005 起），用于市场级股债性价比长历史
+MARKET_DIVIDEND_SERIES = {
+    "MKT_SH": "上证A股",
+    "MKT_SZ": "深证A股",
+    "MKT_GEM": "创业板",
+    "MKT_STAR": "科创板",
+}
+
 BOND_BENCHMARKS: list[BondBenchmark] = [
     BondBenchmark("bond10y", "10年期国债", "中债国债收益率曲线", "10年"),
     BondBenchmark("bond30y", "30年期国债", "中债国债收益率曲线", "30年"),

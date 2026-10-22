@@ -79,9 +79,18 @@ def fetch_perf(index_code: str, start: str = "20050101", end: str | None = None)
     return parse_perf(payload)
 
 
-def fetch_indicator(index_code: str) -> list[dict]:
-    content = http_get_bytes(INDICATOR_URL.format(code=index_code), timeout=60)
-    return parse_indicator(content, index_code)
+def fetch_indicator(index_code: str, retries: int = 3) -> list[dict]:
+    """抓取近 20 日估值快照。失败会重试（该 OSS 偶发超时）。"""
+    import time
+    last_exc: Exception | None = None
+    for attempt in range(retries):
+        try:
+            content = http_get_bytes(INDICATOR_URL.format(code=index_code), timeout=60)
+            return parse_indicator(content, index_code)
+        except Exception as exc:
+            last_exc = exc
+            time.sleep(1.0 + attempt)
+    raise last_exc if last_exc else RuntimeError("fetch_indicator failed")
 
 
 def fetch_index(index_code: str, start_date: str | None = None) -> dict:

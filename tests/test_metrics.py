@@ -37,6 +37,18 @@ def test_percentile_series_window_limits():
     assert out[-1] == pytest.approx(95.0)  # 窗口 [90..99] 中值 99 → (9+0.5)/10
 
 
+def test_percentile_series_matches_pointwise_reference():
+    """向量化实现必须与逐点 percentile_rank 结果一致。"""
+    values = [3.0, 1.0, 4.0, 1.0, 5.0, 9.0, 2.0, 6.0] * 20
+    for w in (5, 20, None):
+        fast = metrics.percentile_series(values, w, min_samples=3)
+        slow = []
+        for i, v in enumerate(values):
+            lo = 0 if w is None else max(0, i - w + 1)
+            slow.append(metrics.percentile_rank(values[lo:i + 1], v, min_samples=3))
+        assert fast == slow
+
+
 def test_build_daily_series_forward_fills():
     obs = [("2026-01-02", 10.0), ("2026-01-06", 12.0)]
     days = ["2026-01-02", "2026-01-05", "2026-01-06", "2026-01-07"]
