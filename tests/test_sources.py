@@ -64,3 +64,28 @@ def test_parse_yield_curve_long_format():
     assert {"curve": "中债国债收益率曲线", "date": "2026-10-21", "tenor": "10年",
             "yield": 1.68} in rows
     assert len(rows) == 6  # 2 天 × 3 个期限
+
+
+def test_parse_pe_history():
+    from xquant.sources import danjuan
+    payload = {"data": {"index_eva_pe_growths": [
+        {"pe": 12.85, "ts": 1791465600000},
+        {"pe": 13.10, "ts": 1792070400000},
+    ]}}
+    rows = danjuan.parse_pe_history(payload)
+    assert len(rows) == 2
+    assert rows[0][1] == 12.85
+    assert rows[0][0].startswith("2026-10")
+
+
+def test_parse_snapshot():
+    from xquant.sources import danjuan
+    payload = {"data": {"items": [
+        {"index_code": "SH000300", "name": "沪深300", "pe": 12.85, "pb": 1.36,
+         "pe_percentile": 0.52, "yeild": 0.0298},
+    ]}}
+    rows = danjuan.parse_snapshot(payload)
+    assert rows[0]["index_code"] == "000300"
+    assert rows[0]["pe"] == 12.85
+    assert rows[0]["dividend_yield"] == pytest.approx(2.98, abs=0.01)
+
