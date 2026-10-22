@@ -1,0 +1,44 @@
+name: update-market-data
+
+on:
+  schedule:
+    - cron: "30 8 * * 1-5"   # 北京时间 16:30（交易日收盘后）
+  workflow_dispatch:
+
+concurrency:
+  group: update-market-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Update market data
+        run: python -m xquant.cli update
+      - name: Commit published data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/series.csv data/snapshot.json
+          if git diff --staged --quiet; then
+            echo "数据无变化"
+          else
+            git commit -m "chore: 更新市场数据 $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          fi
+      - name: Upload data artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: xquant-data
+          path: |
+            data/series.csv
+            data/snapshot.json
+          retention-days: 30
