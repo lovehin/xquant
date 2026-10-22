@@ -1,0 +1,8 @@
+akshare>=1.19
+fastapi>=0.115
+uvicorn>=0.30
+pandas>=3.0
+numpy>=2.0
+requests>=2.32
+pytest>=8.0
+httpx>=0.27
