@@ -86,7 +86,7 @@ def test_run_backtest_computes_stats(conn):
     store.upsert_bond_yield(conn, [
         {"curve": "中债国债收益率曲线", "date": d, "tenor": "10年", "yield": 1.8} for d in days])
     store.upsert_valuation(conn, [
-        {"index_code": "000300", "date": d, "source": "csindex", "pe": 12.0,
+        {"index_code": "000300", "date": d, "source": "csindex_pe", "pe": 12.0,
          "pe_total_shares": None, "pe_calc_shares": None, "pb": None,
          "dividend_yield": None, "dividend_yield_total_shares": None} for d in days])
     store.upsert_price(conn, [

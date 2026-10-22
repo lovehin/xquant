@@ -88,6 +88,18 @@ def upsert_metric(conn, rows):
     return _upsert(conn, "metric_series", rows)
 
 
+def delete_metric(conn, index_code: str, metric: str, freq: str | None = None) -> int:
+    """删除某指标序列的旧行（重算整段序列前先清空，避免残留脏数据）。"""
+    sql = "DELETE FROM metric_series WHERE index_code=? AND metric=?"
+    args: list[Any] = [index_code, metric]
+    if freq:
+        sql += " AND freq=?"
+        args.append(freq)
+    cur = conn.execute(sql, args)
+    conn.commit()
+    return cur.rowcount
+
+
 def record_quality(conn, source: str, status: str, rows: int, message: str, duration_ms: int) -> None:
     conn.execute(
         "INSERT INTO data_quality (ts, source, status, rows, message, duration_ms) VALUES (?,?,?,?,?,?)",

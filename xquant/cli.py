@@ -34,6 +34,8 @@ def cmd_export(args) -> int:
     conn = store.connect(DB_PATH)
     store.init_db(conn)
     try:
+        # 先用库中已有原始数据重算指标，保证发布产物与库一致
+        pipeline.compute_metrics(conn, bond_key=args.bond)
         snap = pipeline.export_snapshot(conn, SNAPSHOT_PATH, bond_key=args.bond)
         csv_path = bundle.write_bundle(conn, args.bundle or BUNDLE_PATH)
     finally:

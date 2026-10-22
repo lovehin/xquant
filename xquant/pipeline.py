@@ -7,10 +7,11 @@
 """
 from __future__ import annotations
 
+import bisect
 import json
 import statistics
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from xquant import bundle, metrics, store
@@ -93,20 +94,105 @@ def default_sources() -> list[Source]:
 SOURCES = default_sources()
 
 
-def build_master_pe(conn, index_code: str) -> list[tuple[str, float]]:
-    """合并各源 PE 观测为单一升序序列；同一天取优先级最高的源。"""
+def _source_series(conn, index_code: str, source: str) -> list[tuple[str, float]]:
     rows = conn.execute(
-        "SELECT date, pe, source FROM index_valuation WHERE index_code=? AND pe IS NOT NULL",
-        (index_code,)).fetchall()
-    if not rows:
-        return []
-    best: dict[str, tuple[int, float]] = {}
-    for r in rows:
-        pri = PE_SOURCE_PRIORITY.get(r["source"], 9)
-        cur = best.get(r["date"])
-        if cur is None or pri < cur[0]:
-            best[r["date"]] = (pri, float(r["pe"]))
-    return sorted((d, v[1]) for d, v in best.items())
+        "SELECT date, pe FROM index_valuation WHERE index_code=? AND source=? AND pe IS NOT NULL"
+        " ORDER BY date", (index_code, source)).fetchall()
+    return [(r["date"], float(r["pe"])) for r in rows]
+
+
+def _lookup_ref(ref_obs: list[tuple[str, float]], day: str, tol_days: int = 10) -> float | None:
+    """取参考源中不晚于 day、且在 tol_days 天内的最近一个观测。"""
+    if not ref_obs:
+        return None
+    idx = bisect.bisect_right([d for d, _ in ref_obs], day) - 1
+    if idx < 0:
+        return None
+    d, v = ref_obs[idx]
+    if (date.fromisoformat(day) - date.fromisoformat(d)).days > tol_days:
+        return None
+    return v
+
+
+def _drop_median_outliers(obs: list[tuple[str, float]], window: int = 5,
+                          tol: float = 0.30) -> list[tuple[str, float]]:
+    """用局部中位数剔除离群点。
+
+    对每个点，取其前后 window 个观测（不含自身）的中位数作基准，
+    偏离基准超过 tol 判为脏数据。中证接口在个别交易日会给出错值
+    （如 2012-06-08、2023-05-04、2024-12-09），这里统一剔除。
+    财报期那种「水平切换」不会被误伤：切换点相对局部中位数偏离有限。
+    """
+    if len(obs) < 3:
+        return list(obs)
+    vals = [v for _, v in obs]
+    n = len(vals)
+    keep: list[tuple[str, float]] = []
+    for i in range(n):
+        lo = max(0, i - window)
+        hi = min(n, i + window + 1)
+        neighbors = vals[lo:hi]
+        neighbors = neighbors[:i - lo] + neighbors[i - lo + 1:]
+        if not neighbors:
+            keep.append(obs[i])
+            continue
+        med = statistics.median(neighbors)
+        if med > 0 and abs(vals[i] - med) / med > tol:
+            continue
+        keep.append(obs[i])
+    return keep
+
+
+def _truncate_pre_step(obs: list[tuple[str, float]], ref_obs: list[tuple[str, float]],
+                       step: float = 0.35, confirm: int = 20) -> list[tuple[str, float]]:
+    """截断「永久性水平断点」之前的数据。
+
+    中证接口在指数正式发布前的 PE 字段无意义（例：2012 年中证1000 的 PE 显示 9.36，
+    2014-09-25 断点后才变成真实水平 48）。识别方式：出现 >35% 的跳变且之后长期维持
+    新水平；若断点之前没有任何其他源的参考数据，则前面的数据不可信，整段丢弃。
+    """
+    for i in range(1, len(obs)):
+        d0, v0 = obs[i - 1]
+        d, v = obs[i]
+        if v0 <= 0 or abs(v / v0 - 1) <= step:
+            continue
+        tail = obs[i:i + confirm]
+        if len(tail) < confirm:
+            break
+        vals = [x[1] for x in tail]
+        if max(vals) - min(vals) > 0.15 * max(vals):
+            continue
+        if _lookup_ref(ref_obs, d0, 10) is None:
+            return obs[i:]
+        break
+    return obs
+
+
+def build_master_pe(conn, index_code: str) -> list[tuple[str, float]]:
+    """合并各源 PE 观测为单一升序序列。
+
+    主口径为中证官方近四季滚动市盈率，但该接口在指数发布前与个别交易日有脏值，
+    因此先做两道清洗：局部中位数离群点剔除 → 永久断点截断。
+    注意：各家的 PE 计算方法本就不同（中证与蛋卷可差 40%），故不做跨源数值比对，
+    只用其他源判断「断点之前是否本来就有可靠数据」。
+    同一天取优先级最高的源。
+    """
+    cs = _source_series(conn, index_code, "csindex_pe")
+    dj = _source_series(conn, index_code, "danjuan")
+    lg = _source_series(conn, index_code, "legulegu")
+    ref = sorted(dj + lg)
+
+    cs = _drop_median_outliers(cs)
+    cs = _truncate_pre_step(cs, ref)
+
+    merged: dict[str, tuple[int, float]] = {}
+    for series, source in ((cs, "csindex_pe"), (dj, "danjuan"), (lg, "legulegu")):
+        for d, v in series:
+            pri = PE_SOURCE_PRIORITY.get(source, 9)
+            cur = merged.get(d)
+            if cur is None or pri < cur[0]:
+                merged[d] = (pri, v)
+    return sorted((d, v[1]) for d, v in merged.items())
 
 
 def _dividend_series(conn, index_code: str) -> list[tuple[str, float]]:
@@ -153,6 +239,12 @@ def compute_metrics(conn, bond_key: str = DEFAULT_BOND_BENCHMARK) -> dict:
                             "value": pe, "freq": "daily", "source": "master"})
             erp_rows.append({"index_code": spec.code, "date": d, "metric": "erp",
                              "value": value, "freq": "daily", "source": "master"})
+        # 整段重写，避免清洗后残留旧行
+        store.delete_metric(conn, spec.code, "pe")
+        store.delete_metric(conn, spec.code, "erp")
+        for wname in PERCENTILE_WINDOWS:
+            store.delete_metric(conn, spec.code, f"erp_pct_{wname}")
+        store.delete_metric(conn, spec.code, "dy_spread")
         store.upsert_metric(conn, pe_rows)
         store.upsert_metric(conn, erp_rows)
 
@@ -169,6 +261,7 @@ def compute_metrics(conn, bond_key: str = DEFAULT_BOND_BENCHMARK) -> dict:
 
     # 市场级股息率长历史（上证/深证/创业板/科创板，2005 起）
     for code in MARKET_DIVIDEND_SERIES:
+        store.delete_metric(conn, code, "dy_spread")
         store.upsert_metric(conn, _dividend_spread_rows(conn, code, bond_map))
 
     # 风格利差：中证500 - 中证1000
@@ -178,6 +271,8 @@ def compute_metrics(conn, bond_key: str = DEFAULT_BOND_BENCHMARK) -> dict:
     for d in sorted(set(s500) & set(s1000)):
         style_rows.append({"index_code": "STYLE_500_1000", "date": d, "metric": "style_spread",
                            "value": s500[d] - s1000[d], "freq": "daily", "source": "master"})
+    store.delete_metric(conn, "STYLE_500_1000", "style_spread")
+    store.delete_metric(conn, "STYLE_500_1000", "style_pct")
     store.upsert_metric(conn, style_rows)
     if style_rows:
         vals = [r["value"] for r in style_rows]
