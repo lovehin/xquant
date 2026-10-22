@@ -3,42 +3,7 @@ import pytest
 from xquant import pipeline, store
 
 
-def seeded_conn():
-    conn = store.connect(":memory:")
-    store.init_db(conn)
-    store.upsert_bond_yield(conn, [
-        {"curve": "中债国债收益率曲线", "date": f"2026-01-{d:02d}", "tenor": "10年",
-         "yield": 1.7} for d in range(2, 12)
-    ])
-    store.upsert_valuation(conn, [
-        {"index_code": "000300", "date": f"2026-01-{d:02d}", "source": "csindex",
-         "pe": 12.0, "pe_total_shares": None, "pe_calc_shares": None, "pb": None,
-         "dividend_yield": 2.5, "dividend_yield_total_shares": None}
-        for d in range(2, 12)
-    ])
-    store.upsert_valuation(conn, [
-        {"index_code": "000905", "date": f"2026-01-{d:02d}", "source": "csindex",
-         "pe": 20.0, "pe_total_shares": None, "pe_calc_shares": None, "pb": None,
-         "dividend_yield": 1.5, "dividend_yield_total_shares": None}
-        for d in range(2, 12)
-    ])
-    store.upsert_valuation(conn, [
-        {"index_code": "000852", "date": f"2026-01-{d:02d}", "source": "csindex",
-         "pe": 30.0, "pe_total_shares": None, "pe_calc_shares": None, "pb": None,
-         "dividend_yield": 1.2, "dividend_yield_total_shares": None}
-        for d in range(2, 12)
-    ])
-    store.upsert_valuation(conn, [
-        {"index_code": "MKT_SH", "date": f"2026-01-{d:02d}", "source": "legulegu_gxl",
-         "pe": None, "pe_total_shares": None, "pe_calc_shares": None, "pb": None,
-         "dividend_yield": 2.8, "dividend_yield_total_shares": None}
-        for d in range(2, 12)
-    ])
-    return conn
-
-
-def test_build_master_pe_prefers_csindex_and_keeps_legulegu_history():
-    conn = seeded_conn()
+def test_build_master_pe_prefers_csindex_and_keeps_legulegu_history(conn):
     store.upsert_valuation(conn, [
         {"index_code": "000300", "date": "2025-12-01", "source": "legulegu",
          "pe": 11.0, "pe_total_shares": None, "pe_calc_shares": None, "pb": None,
@@ -50,8 +15,7 @@ def test_build_master_pe_prefers_csindex_and_keeps_legulegu_history():
     assert len(rows) == 11  # 1 条历史 + 10 条日频
 
 
-def test_compute_metrics_writes_erp_and_percentiles():
-    conn = seeded_conn()
+def test_compute_metrics_writes_erp_and_percentiles(conn):
     pipeline.compute_metrics(conn)
     erp = store.fetch_metric(conn, "000300", "erp")
     # PE=12 → 8.3333%，减 1.7% → 6.6333
@@ -59,30 +23,26 @@ def test_compute_metrics_writes_erp_and_percentiles():
     assert store.fetch_metric(conn, "000300", "erp_pct_10y") == []  # 样本不足不写
 
 
-def test_compute_metrics_writes_dividend_spread():
-    conn = seeded_conn()
+def test_compute_metrics_writes_dividend_spread(conn):
     pipeline.compute_metrics(conn)
     ds = store.fetch_metric(conn, "000300", "dy_spread")
     assert ds[0][1] == pytest.approx(0.8, abs=1e-9)  # 2.5 - 1.7
 
 
-def test_compute_metrics_writes_market_dividend_spread():
-    conn = seeded_conn()
+def test_compute_metrics_writes_market_dividend_spread(conn):
     pipeline.compute_metrics(conn)
     m = store.fetch_metric(conn, "MKT_SH", "dy_spread")
     assert m[0][1] == pytest.approx(1.1, abs=1e-9)  # 2.8 - 1.7
 
 
-def test_compute_metrics_writes_style_spread():
-    conn = seeded_conn()
+def test_compute_metrics_writes_style_spread(conn):
     pipeline.compute_metrics(conn)
     style = store.fetch_metric(conn, "STYLE_500_1000", "style_spread")
     # ERP(500)=1/20*100-1.7=3.3；ERP(1000)=1/30*100-1.7=1.6333；差=1.6667
     assert style[0][1] == pytest.approx(1.66667, abs=1e-4)
 
 
-def test_run_without_network_recomputes_and_exports(tmp_path):
-    conn = seeded_conn()
+def test_run_without_network_recomputes_and_exports(tmp_path, conn):
     out = tmp_path / "snapshot.json"
     result = pipeline.run(conn, with_network=False, snapshot_path=out)
     assert result["summary"]["indices"] >= 3
@@ -94,8 +54,7 @@ def test_run_without_network_recomputes_and_exports(tmp_path):
     assert data["indexes"][0]["erp"] is not None
 
 
-def test_source_failure_is_isolated():
-    conn = seeded_conn()
+def test_source_failure_is_isolated(conn):
 
     class Boom:
         source = "boom"
@@ -119,7 +78,7 @@ def test_source_failure_is_isolated():
     assert statuses["good"] == "ok"
 
 
-def test_run_backtest_computes_stats():
+def test_run_backtest_computes_stats(conn):
     import datetime as dt
     conn = store.connect(":memory:")
     store.init_db(conn)

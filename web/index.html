@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xquant · 中国股债性价比仪表盘</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">xquant</span>
+    <span class="sub">中国股债性价比 · 格雷厄姆指数</span>
+  </div>
+  <div class="topbar-right">
+    <span id="bond-label" class="pill">10年期国债</span>
+    <span id="updated-at" class="muted"></span>
+    <button id="refresh-btn" class="btn">刷新数据</button>
+  </div>
+</header>
+
+<main>
+  <section class="cards" id="cards"></section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>格雷厄姆指数 / 股权风险溢价</h2>
+      <div class="controls">
+        <label>指数 <select id="erp-index"></select></label>
+        <label>分位窗口
+          <select id="erp-window">
+            <option value="3y">近3年</option>
+            <option value="5y">近5年</option>
+            <option value="10y" selected>近10年</option>
+            <option value="all">全历史</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <p class="caption" id="erp-caption"></p>
+    <div id="chart-erp" class="chart chart-lg"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>股息率差（股息率 − 10年期国债）</h2>
+      <div class="controls"><label>指数 <select id="dy-index"></select></label></div>
+    </div>
+    <p class="caption" id="dy-caption"></p>
+    <div id="chart-dy" class="chart"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>多指数对比</h2></div>
+    <p class="caption">口径：1/PE(TTM)×100 − 10年期国债收益率。悬停可查看各指数当前值。</p>
+    <div id="chart-compare" class="chart"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>大小盘风格（ERP(中证500) − ERP(中证1000)）</h2></div>
+    <p class="caption" id="style-caption"></p>
+    <div id="chart-style" class="chart"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>股 / 债配置参考</h2></div>
+    <div id="allocation-table" class="table-wrap"></div>
+  </section>
+
+  <section class="panel">
+    <details>
+      <summary>数据健康与口径说明</summary>
+      <div id="health" class="table-wrap"></div>
+      <p class="disclaimer">
+        口径：格雷厄姆指数 = 1/PE(TTM)×100 − 中债10年期国债收益率。PE 主口径为中证指数官方「近四季滚动市盈率」，
+        创业板指用蛋卷周频 PE；股息率用中证「计算用股本」口径；债券曲线来自中国债券信息网（中债）。
+        配置建议为固定规则映射，仅供参考，不构成投资建议。
+      </p>
+    </details>
+  </section>
+</main>
+
+<script src="/vendor/echarts.min.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
