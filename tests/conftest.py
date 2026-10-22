@@ -38,3 +38,12 @@ def conn():
     store.init_db(conn)
     _seed(conn)
     return conn
+
+
+@pytest.fixture(autouse=True)
+def _isolate_publish_paths(tmp_path, monkeypatch):
+    """防止测试误写仓库里的 data/series.csv 与 data/snapshot.json。"""
+    from xquant import pipeline
+
+    monkeypatch.setattr(pipeline, "BUNDLE_PATH", tmp_path / "series.csv", raising=False)
+    monkeypatch.setattr(pipeline, "SNAPSHOT_PATH", tmp_path / "snapshot.json", raising=False)

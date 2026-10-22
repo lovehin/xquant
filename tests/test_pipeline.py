@@ -44,7 +44,8 @@ def test_compute_metrics_writes_style_spread(conn):
 
 def test_run_without_network_recomputes_and_exports(tmp_path, conn):
     out = tmp_path / "snapshot.json"
-    result = pipeline.run(conn, with_network=False, snapshot_path=out)
+    result = pipeline.run(conn, with_network=False, snapshot_path=out,
+                          bundle_path=tmp_path / "series.csv")
     assert result["summary"]["indices"] >= 3
     assert out.exists()
     import json
@@ -54,7 +55,7 @@ def test_run_without_network_recomputes_and_exports(tmp_path, conn):
     assert data["indexes"][0]["erp"] is not None
 
 
-def test_source_failure_is_isolated(conn):
+def test_source_failure_is_isolated(conn, tmp_path):
 
     class Boom:
         source = "boom"
@@ -70,7 +71,8 @@ def test_source_failure_is_isolated(conn):
 
     pipeline.SOURCES = [Boom(), Good()]
     try:
-        result = pipeline.run(conn, with_network=True)
+        result = pipeline.run(conn, with_network=True, snapshot_path=tmp_path / "s.json",
+                              bundle_path=tmp_path / "series.csv")
     finally:
         pipeline.SOURCES = pipeline.default_sources()
     statuses = {q["source"]: q["status"] for q in result["quality"]}
