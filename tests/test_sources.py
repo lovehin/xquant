@@ -89,3 +89,31 @@ def test_parse_snapshot():
     assert rows[0]["pe"] == 12.85
     assert rows[0]["dividend_yield"] == pytest.approx(2.98, abs=0.01)
 
+
+def test_parse_ebs_scales_to_percent():
+    import pandas as pd
+    from xquant.sources import legulegu
+    df = pd.DataFrame({"日期": [pd.Timestamp("2026-10-21")], "沪深300指数": [4111.93],
+                       "股债利差": [0.0657], "股债利差均线": [0.0617]})
+    rows = legulegu.parse_ebs(df)
+    assert rows == [("2026-10-21", pytest.approx(6.57))]
+
+
+def test_parse_market_gxl():
+    import pandas as pd
+    from xquant.sources import legulegu
+    df = pd.DataFrame({"日期": [pd.Timestamp("2026-10-21")], "股息率": [2.79]})
+    rows = legulegu.parse_market_gxl(df, "MKT_SH")
+    assert rows[0]["index_code"] == "MKT_SH"
+    assert rows[0]["dividend_yield"] == 2.79
+
+
+def test_parse_index_pe_uses_ttm_column():
+    import pandas as pd
+    from xquant.sources import legulegu
+    df = pd.DataFrame({"日期": [pd.Timestamp("2026-09-30")], "静态市盈率": [13.56],
+                       "滚动市盈率": [12.48]})
+    rows = legulegu.parse_index_pe(df, "000300")
+    assert rows == [("2026-09-30", 12.48)]
+
+
