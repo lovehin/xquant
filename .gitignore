@@ -2,6 +2,10 @@
 __pycache__/
 *.pyc
 .DS_Store
-data/*.db-journal
-data/*.db-wal
-data/*.db-shm
+
+# 本地抓取缓存（体积大，不进版本库；发布产物是 data/series.csv + data/snapshot.json）
+data/market.db
+data/market.db-journal
+data/market.db-wal
+data/market.db-shm
+data/*.log

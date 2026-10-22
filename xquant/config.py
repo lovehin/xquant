@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 DB_PATH = DATA_DIR / "market.db"
 SNAPSHOT_PATH = DATA_DIR / "snapshot.json"
+BUNDLE_PATH = DATA_DIR / "series.csv"
 WEB_DIR = ROOT / "web"
 
 # 最小分位样本数，低于此值分位返回 None
@@ -84,6 +85,9 @@ BOND_BENCHMARKS: list[BondBenchmark] = [
 ]
 
 DEFAULT_BOND_BENCHMARK = "bond10y"
+
+# 规则回测使用的指数
+BACKTEST_INDEX = "000300"
 
 PERCENTILE_WINDOWS: dict[str, int | None] = {"3y": 1095, "5y": 1825, "10y": 3650, "all": None}
 

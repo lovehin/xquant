@@ -13,8 +13,8 @@ import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from xquant import metrics, store
-from xquant.config import (DEFAULT_BOND_BENCHMARK, INDEXES, LEGULEGU_CODE_TO_SYMBOL,
+from xquant import bundle, metrics, store
+from xquant.config import (BUNDLE_PATH, DEFAULT_BOND_BENCHMARK, INDEXES, LEGULEGU_CODE_TO_SYMBOL,
                             MARKET_DIVIDEND_SERIES, PERCENTILE_WINDOWS, SNAPSHOT_PATH,
                             allocation_advice, benchmark_by_key)
 from xquant.sources import chinabond, csindex, danjuan, legulegu
@@ -422,7 +422,7 @@ def export_snapshot(conn, path: str | Path | None = None,
 
 def run(conn, bond_key: str = DEFAULT_BOND_BENCHMARK, with_network: bool = True,
         sources: list | None = None, snapshot_path: str | Path | None = None,
-        progress=None) -> dict:
+        bundle_path: str | Path | None = None, progress=None) -> dict:
     global SOURCES
     if sources is not None:
         SOURCES = sources
@@ -440,6 +440,10 @@ def run(conn, bond_key: str = DEFAULT_BOND_BENCHMARK, with_network: bool = True,
     if progress:
         progress(f"指标计算完成 {summary['compute_ms']} ms")
     export_snapshot(conn, snapshot_path, bond_key=bond_key)
+    bundle_path = bundle_path or BUNDLE_PATH
+    bundle.write_bundle(conn, bundle_path)
+    if progress:
+        progress(f"已导出 {bundle_path}")
     store.set_meta(conn, "last_run", datetime.now(CST).isoformat(timespec="seconds"))
     store.set_meta(conn, "last_bond_benchmark", bond_key)
     return {"quality": quality, "summary": summary}
