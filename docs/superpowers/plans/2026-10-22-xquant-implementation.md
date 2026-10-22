@@ -673,9 +673,9 @@ def test_dividend_spread():
 
 def test_percentile_rank_bounds():
     vals = [1.0, 2.0, 3.0, 4.0, 5.0]
-    assert metrics.percentile_rank(vals, 5.0) == pytest.approx(90.0)
-    assert metrics.percentile_rank(vals, 1.0) == pytest.approx(10.0)
-    assert metrics.percentile_rank(vals, 3.0) == pytest.approx(50.0)
+    assert metrics.percentile_rank(vals, 5.0, min_samples=5) == pytest.approx(90.0)
+    assert metrics.percentile_rank(vals, 1.0, min_samples=5) == pytest.approx(10.0)
+    assert metrics.percentile_rank(vals, 3.0, min_samples=5) == pytest.approx(50.0)
 
 
 def test_percentile_rank_insufficient_sample():
@@ -687,7 +687,7 @@ def test_percentile_series_window_limits():
     out = metrics.percentile_series(values, window=10, min_samples=2)
     assert len(out) == 100
     assert out[0] is None  # 窗口内只有 1 个样本，不足 min_samples
-    assert out[1] == pytest.approx(50.0)
+    assert out[1] == pytest.approx(75.0)  # 窗口 [0,1] 中值 1 → (1+0.5)/2
     assert out[-1] == pytest.approx(99.5)  # 最大值 → (99+0.5)/100
 
 
