@@ -34,7 +34,7 @@ def test_percentile_series_window_limits():
     assert len(out) == 100
     assert out[0] is None  # 窗口内只有 1 个样本，不足 min_samples
     assert out[1] == pytest.approx(75.0)  # 窗口 [0,1] 中值 1 → (1+0.5)/2
-    assert out[-1] == pytest.approx(99.5)  # 最大值 → (99+0.5)/100
+    assert out[-1] == pytest.approx(95.0)  # 窗口 [90..99] 中值 99 → (9+0.5)/10
 
 
 def test_build_daily_series_forward_fills():
