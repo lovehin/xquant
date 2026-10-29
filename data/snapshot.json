@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-29T16:19:35+08:00",
+  "generated_at": "2026-10-29T16:40:20+08:00",
   "bond": {
     "key": "bond10y",
     "label": "10年期国债",
@@ -320,7 +320,7 @@
       "date": "2026-10-28",
       "percentile": 97.1,
       "temperature": "便宜",
-      "history_start": "2016-10-21",
+      "history_start": "2016-10-28",
       "dividend_spread": -0.4245000000000001,
       "allocation": {
         "equity_min": 80,
@@ -352,7 +352,7 @@
           }
         },
         "all": {
-          "percentile": 97.1057884231537,
+          "percentile": 97.1,
           "temperature": "便宜",
           "allocation": {
             "equity_min": 80,
@@ -1052,524 +1052,324 @@
   },
   "quality": [
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "chinabond",
       "status": "ok",
-      "rows": 184,
-      "message": "from 20261018",
-      "duration_ms": 1814
+      "rows": 107964,
+      "message": "from 20060101",
+      "duration_ms": 86804
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8976,
       "message": "000300",
-      "duration_ms": 4466
+      "duration_ms": 3090
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000905",
-      "duration_ms": 3644
+      "duration_ms": 3077
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8798,
       "message": "000852",
-      "duration_ms": 5180
+      "duration_ms": 1839
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000985",
-      "duration_ms": 4148
+      "duration_ms": 1758
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000016",
-      "duration_ms": 1026
+      "duration_ms": 3080
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 3204,
       "message": "000688",
-      "duration_ms": 1069
+      "duration_ms": 2247
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000922",
-      "duration_ms": 1917
+      "duration_ms": 1535
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000015",
-      "duration_ms": 1651
+      "duration_ms": 1917
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000906",
-      "duration_ms": 1735
+      "duration_ms": 2634
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000928",
-      "duration_ms": 1625
+      "duration_ms": 2967
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000929",
-      "duration_ms": 1289
+      "duration_ms": 2453
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000930",
-      "duration_ms": 1175
+      "duration_ms": 2934
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000931",
-      "duration_ms": 2520
+      "duration_ms": 2588
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000932",
-      "duration_ms": 1894
+      "duration_ms": 2629
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000933",
-      "duration_ms": 1355
+      "duration_ms": 4916
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000934",
-      "duration_ms": 1757
+      "duration_ms": 2674
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000935",
-      "duration_ms": 984
+      "duration_ms": 2602
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000936",
-      "duration_ms": 1611
+      "duration_ms": 1858
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000937",
-      "duration_ms": 4268
+      "duration_ms": 1436
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000300",
-      "duration_ms": 1742
+      "duration_ms": 1649
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000905",
-      "duration_ms": 539
+      "duration_ms": 653
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000852",
-      "duration_ms": 533
+      "duration_ms": 680
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000985",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000016",
-      "duration_ms": 1413
+      "duration_ms": 703
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 353,
       "message": "000688",
-      "duration_ms": 314
+      "duration_ms": 507
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "399006",
-      "duration_ms": 316
+      "duration_ms": 633
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000922",
-      "duration_ms": 272
+      "duration_ms": 772
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000015",
-      "duration_ms": 591
+      "duration_ms": 689
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 0,
       "message": "000906",
-      "duration_ms": 293
+      "duration_ms": 496
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000928",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000929",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000930",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000931",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000932",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000933",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000934",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000935",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000936",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "danjuan",
-      "status": "ok",
-      "rows": 0,
-      "message": "000937",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "danjuan_snapshot",
       "status": "ok",
       "rows": 63,
       "message": "",
-      "duration_ms": 712
+      "duration_ms": 555
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 259,
       "message": "000300",
-      "duration_ms": 634
+      "duration_ms": 1552
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 238,
       "message": "000905",
-      "duration_ms": 595
+      "duration_ms": 1378
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 145,
       "message": "000852",
-      "duration_ms": 1609
+      "duration_ms": 1395
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000985",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 262,
       "message": "000016",
-      "duration_ms": 865
+      "duration_ms": 1492
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000688",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "399006",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000922",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 262,
       "message": "000015",
-      "duration_ms": 1320
+      "duration_ms": 1836
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 238,
       "message": "000906",
-      "duration_ms": 1223
+      "duration_ms": 1426
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000928",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000929",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000930",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000931",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000932",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000933",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000934",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000935",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000936",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
-      "source": "legulegu",
-      "status": "ok",
-      "rows": 0,
-      "message": "000937",
-      "duration_ms": 0
-    },
-    {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "legulegu_gxl:MKT_GEM",
       "status": "ok",
       "rows": 4126,
       "message": "",
-      "duration_ms": 1117
+      "duration_ms": 1792
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "legulegu_gxl:MKT_SH",
       "status": "ok",
       "rows": 5297,
       "message": "",
-      "duration_ms": 908
+      "duration_ms": 2491
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "legulegu_gxl:MKT_STAR",
       "status": "ok",
       "rows": 1761,
       "message": "",
-      "duration_ms": 894
+      "duration_ms": 1829
     },
     {
-      "ts": "2026-10-29T08:16:17+00:00",
+      "ts": "2026-10-29T08:40:14+00:00",
       "source": "legulegu_gxl:MKT_SZ",
       "status": "ok",
       "rows": 5297,
       "message": "",
-      "duration_ms": 910
+      "duration_ms": 1823
     }
   ]
 }
