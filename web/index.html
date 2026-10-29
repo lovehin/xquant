@@ -51,7 +51,21 @@
   </section>
 
   <section class="panel">
-    <div class="panel-head"><h2>多指数对比</h2></div>
+    <div class="panel-head">
+      <h2>多指数对比</h2>
+      <div class="controls">
+        <label>范围
+          <select id="compare-group">
+            <option value="宽基" selected>宽基</option>
+            <option value="行业">行业</option>
+            <option value="红利">红利</option>
+            <option value="成长">成长</option>
+            <option value="全市场">全市场</option>
+            <option value="全部">全部</option>
+          </select>
+        </label>
+      </div>
+    </div>
     <p class="caption">口径：1/PE(TTM)×100 − 10年期国债收益率。悬停可查看各指数当前值。</p>
     <div id="chart-compare" class="chart"></div>
   </section>

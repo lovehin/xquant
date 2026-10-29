@@ -94,7 +94,7 @@ def test_run_backtest_computes_stats(conn):
     store.upsert_price(conn, [
         {"index_code": "000300", "date": d, "close": 4000.0, "source": "csindex"} for d in days])
     pipeline.compute_metrics(conn)
-    bt = pipeline.run_backtest(conn)
+    bt = pipeline.run_backtest(conn, warmup=60)
     assert bt["available"] is True
     assert bt["strategy"]["cagr"] is not None
     assert bt["equity_only"]["cagr"] is not None

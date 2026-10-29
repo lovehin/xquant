@@ -60,7 +60,7 @@
       .map((i) => {
         const alloc = i.allocation ? `${i.allocation.equity_min}%–${i.allocation.equity_max}%` : "—";
         return `<div class="card">
-          <h3>${i.name} <span class="muted">${i.code}</span></h3>
+          <h3>${i.name} <span class="muted">${i.code} · ${i.group}</span></h3>
           <div class="value">${fmt(i.erp)}<span class="sub"> %</span></div>
           <div class="sub">PE ${fmt(i.pe)} · 分位 ${fmt(i.percentile, 0)}% · ${i.date || "—"}</div>
           <span class="badge ${tempClass(i.temperature)}">${i.temperature}</span>
@@ -184,11 +184,14 @@
 
   async function renderCompare() {
     const data = await dataCompare();
+    const groupEl = document.getElementById("compare-group");
+    const group = groupEl ? groupEl.value : "全部";
+    const list = data.series.filter((s) => group === "全部" || s.group === group);
     const palette = ["#2563eb", "#dc2626", "#16a34a", "#d97706", "#7c3aed", "#0891b2", "#be185d", "#4d7c0f", "#0f766e", "#a16207"];
     const c = chart("chart-compare");
-    const dates = data.series.length ? data.series[0].points.map((p) => p[0]) : [];
+    const dates = list.length ? list[0].points.map((p) => p[0]) : [];
     const dateSet = new Set(dates);
-    data.series.forEach((s) => s.points.forEach((p) => dateSet.add(p[0])));
+    list.forEach((s) => s.points.forEach((p) => dateSet.add(p[0])));
     const axis = Array.from(dateSet).sort();
     c.setOption({
       ...chartBase,
@@ -197,7 +200,7 @@
       xAxis: { type: "category", data: axis },
       yAxis: { type: "value", name: "%", scale: true },
       dataZoom: [{ type: "inside" }, { type: "slider", height: 14 }],
-      series: data.series.map((s, i) => {
+      series: list.map((s, i) => {
         const map = new Map(s.points.map((p) => [p[0], p[1]]));
         return {
           name: s.name, type: "line", showSymbol: false, connectNulls: true,
@@ -236,7 +239,7 @@
     const data = await dataAllocation();
     const rows = data.items
       .filter((i) => i.erp !== null)
-      .map((i) => `<tr><td>${i.name}</td><td>${fmt(i.erp)}</td><td>${fmt(i.percentile, 0)}%</td>
+      .map((i) => `<tr><td>${i.name}</td><td>${i.group}</td><td>${fmt(i.erp)}</td><td>${fmt(i.percentile, 0)}%</td>
         <td>${i.temperature}</td><td>${i.allocation ? i.allocation.equity_min + "%–" + i.allocation.equity_max + "%" : "—"}</td></tr>`)
       .join("");
     const bt = data.backtest || {};
@@ -262,7 +265,7 @@
       btHtml = `<p class="caption">回测样本不足，暂不展示（${bt.reason || "数据不足"}）。</p>`;
     }
     document.getElementById("allocation-table").innerHTML =
-      `<table><thead><tr><th>指数</th><th>ERP %</th><th>分位(10年)</th><th>状态</th><th>建议权益仓位</th></tr></thead>
+      `<table><thead><tr><th>指数</th><th>分组</th><th>ERP %</th><th>分位(10年)</th><th>状态</th><th>建议权益仓位</th></tr></thead>
        <tbody>${rows}</tbody></table>
        <p class="caption">规则：ERP 分位 ≤10% → 权益 0–20%；≤30% → 20–40%；≤70% → 40–60%；≤90% → 60–80%；其余 → 80–100%。<br>注：ERP 分位越高代表股票相对债券越便宜，故仓位随分位递增。</p>
        ${btHtml}`;
@@ -284,26 +287,46 @@
     const erp = document.getElementById("erp-index");
     const dy = document.getElementById("dy-index");
     if (erp.options.length) return;
-    indexes.forEach((i) => {
-      const o = document.createElement("option");
-      o.value = i.code; o.textContent = `${i.name} (${i.code})`;
-      erp.appendChild(o);
+    const groups = [...new Set(indexes.map((i) => i.group))];
+
+    // ERP 指数：按分组放到 optgroup
+    groups.forEach((g) => {
+      const og = document.createElement("optgroup");
+      og.label = g;
+      indexes.filter((i) => i.group === g).forEach((i) => {
+        const o = document.createElement("option");
+        o.value = i.code; o.textContent = `${i.name} (${i.code})`;
+        og.appendChild(o);
+      });
+      erp.appendChild(og);
     });
     erp.value = "000300";
+
+    // 股息率差：市场级长历史放最前，其余按分组
+    const market = document.createElement("optgroup");
+    market.label = "市场级（长历史）";
     ["MKT_SH", "MKT_SZ", "MKT_GEM", "MKT_STAR"].forEach((code) => {
       const name = { MKT_SH: "上证A股", MKT_SZ: "深证A股", MKT_GEM: "创业板", MKT_STAR: "科创板" }[code];
       const o = document.createElement("option");
       o.value = code; o.textContent = `${name}（市场级，长历史）`;
-      dy.appendChild(o);
+      market.appendChild(o);
     });
-    indexes.forEach((i) => {
-      const o = document.createElement("option");
-      o.value = i.code; o.textContent = `${i.name} (${i.code})`;
-      dy.appendChild(o);
+    dy.appendChild(market);
+    groups.forEach((g) => {
+      const og = document.createElement("optgroup");
+      og.label = g;
+      indexes.filter((i) => i.group === g).forEach((i) => {
+        const o = document.createElement("option");
+        o.value = i.code; o.textContent = `${i.name} (${i.code})`;
+        og.appendChild(o);
+      });
+      dy.appendChild(og);
     });
+
     erp.addEventListener("change", renderERP);
     dy.addEventListener("change", renderDY);
     document.getElementById("erp-window").addEventListener("change", renderERP);
+    document.getElementById("compare-group").addEventListener("change", renderCompare);
   }
 
   async function renderAll() {

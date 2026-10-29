@@ -24,16 +24,22 @@ def _norm_date(value: str) -> str:
 
 
 def parse_perf(payload: dict) -> list[dict]:
+    """解析 index-perf。
+
+    价格与 PE 分开：``peg`` 缺失时（如沪深300 在 2004–2011-06、2012-01~09）
+    仍保留收盘价，只把该日 PE 记为 None；只要两者都没有才跳过。
+    """
     rows: list[dict] = []
     for item in payload.get("data") or []:
+        close = item.get("close")
         pe = item.get("peg")
-        if pe is None:
+        if close is None and pe is None:
             continue
         rows.append({
             "index_code": item.get("indexCode"),
             "date": _norm_date(item.get("tradeDate")),
-            "close": item.get("close"),
-            "pe": float(pe),
+            "close": close,
+            "pe": float(pe) if pe is not None else None,
         })
     return rows
 
@@ -107,7 +113,7 @@ def fetch_index(index_code: str, start_date: str | None = None) -> dict:
         "endDate": date.today().strftime("%Y%m%d")}, timeout=90)
     perf_rows = parse_perf(payload)
     prices = [{"index_code": index_code, "date": r["date"], "close": r["close"],
-               "source": "csindex"} for r in perf_rows]
+               "source": "csindex"} for r in perf_rows if r["close"] is not None]
     valuation: list[dict] = []
     try:
         valuation = fetch_indicator(index_code)
@@ -115,6 +121,6 @@ def fetch_index(index_code: str, start_date: str | None = None) -> dict:
         valuation = []
     return {
         "valuation": valuation,
-        "perf": [(r["date"], r["pe"]) for r in perf_rows],
+        "perf": [(r["date"], r["pe"]) for r in perf_rows if r["pe"] is not None],
         "prices": prices,
     }

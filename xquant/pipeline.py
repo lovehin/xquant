@@ -15,9 +15,9 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from xquant import bundle, metrics, store
-from xquant.config import (BUNDLE_PATH, DEFAULT_BOND_BENCHMARK, INDEXES, LEGULEGU_CODE_TO_SYMBOL,
-                            MARKET_DIVIDEND_SERIES, PERCENTILE_WINDOWS, SNAPSHOT_PATH,
-                            STYLE_BIG_CODE, STYLE_INDEX, STYLE_SMALL_CODE,
+from xquant.config import (BACKTEST_WARMUP_DAYS, BUNDLE_PATH, DEFAULT_BOND_BENCHMARK, INDEXES,
+                            LEGULEGU_CODE_TO_SYMBOL, MARKET_DIVIDEND_SERIES, PERCENTILE_WINDOWS,
+                            SNAPSHOT_PATH, STYLE_BIG_CODE, STYLE_INDEX, STYLE_SMALL_CODE,
                             allocation_advice, benchmark_by_key)
 from xquant.sources import chinabond, csindex, danjuan, legulegu
 
@@ -360,10 +360,12 @@ def _stats(navs: list[float], years: float | None = None) -> dict:
 
 
 def run_backtest(conn, index_code: str = "000300",
-                 bond_key: str = DEFAULT_BOND_BENCHMARK) -> dict:
+                 bond_key: str = DEFAULT_BOND_BENCHMARK,
+                 warmup: int = BACKTEST_WARMUP_DAYS) -> dict:
     """按 ERP 分位映射规则在 股票 与 债券 之间切换的规则回测。
 
     月末调仓：每月最后一个交易日按当月 ERP 的全历史分位决定次月权益权重（取仓位区间中值）。
+    前 BACKTEST_WARMUP_DAYS 个交易日只积累分位样本、不交易（约 5 年）。
     口径：股票腿为价格指数（不含股息），债券腿按当日 10Y 收益率计票息（不含价格波动）。
     """
     bench = benchmark_by_key(bond_key)
@@ -376,8 +378,9 @@ def run_backtest(conn, index_code: str = "000300",
     pcts = metrics.percentile_series(values, None)
     erp_pct = {d: p for (d, _), p in zip(erp, pcts) if p is not None}
     dates = sorted(set(erp_pct) & set(prices))
-    if len(dates) < 250:
+    if len(dates) < warmup + 250:
         return {"available": False, "reason": f"样本不足（{len(dates)} 天）"}
+    dates = dates[warmup:]
     month_last: dict[str, str] = {}
     for d in dates:
         month_last[d[:7]] = d
@@ -444,6 +447,10 @@ def _fetch_all(conn, progress=None) -> list[dict]:
         for spec in INDEXES:
             if isinstance(source, CsindexSource) and not spec.has_csindex:
                 continue  # 深证系指数中证没有数据，跳过以免超时
+            if isinstance(source, DanjuanSource) and not spec.danjuan_code:
+                continue  # 该指数没有蛋卷代码，避免产生空跑记录
+            if isinstance(source, LeguleguSource) and not spec.legulegu_symbol:
+                continue
             t0 = time.perf_counter()
             try:
                 data = source.fetch(spec.code)

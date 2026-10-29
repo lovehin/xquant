@@ -68,10 +68,17 @@ def cmd_backfill(args) -> int:
                 continue
             if data["valuation"]:
                 store.upsert_valuation(conn, data["valuation"])
+            if data["perf"]:
+                store.upsert_valuation(conn, [
+                    {"index_code": spec.code, "date": d, "source": "csindex_pe",
+                     "pe": pe, "pe_total_shares": None, "pe_calc_shares": None, "pb": None,
+                     "dividend_yield": None, "dividend_yield_total_shares": None}
+                    for d, pe in data["perf"]
+                ])
             if data["prices"]:
                 store.upsert_price(conn, data["prices"])
             print(f"{spec.code} {spec.name}: valuation={len(data['valuation'])} "
-                  f"perf={len(data['perf'])}")
+                  f"pe={len(data['perf'])} prices={len(data['prices'])}")
     finally:
         conn.close()
     return 0

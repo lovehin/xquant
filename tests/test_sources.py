@@ -12,9 +12,12 @@ PERF_PAYLOAD = {
 }
 
 
-def test_parse_perf_maps_peg_to_pe_and_skips_null():
+def test_parse_perf_keeps_price_when_peg_missing():
     rows = csindex.parse_perf(PERF_PAYLOAD)
-    assert rows == [{"index_code": "000300", "date": "2024-01-02", "close": 3386.35, "pe": 11.2}]
+    assert rows == [
+        {"index_code": "000300", "date": "2024-01-02", "close": 3386.35, "pe": 11.2},
+        {"index_code": "000300", "date": "2024-01-03", "close": 3378.30, "pe": None},
+    ]
 
 
 def test_parse_perf_accepts_empty():
