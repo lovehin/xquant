@@ -17,6 +17,7 @@ from pathlib import Path
 from xquant import bundle, metrics, store
 from xquant.config import (BUNDLE_PATH, DEFAULT_BOND_BENCHMARK, INDEXES, LEGULEGU_CODE_TO_SYMBOL,
                             MARKET_DIVIDEND_SERIES, PERCENTILE_WINDOWS, SNAPSHOT_PATH,
+                            STYLE_BIG_CODE, STYLE_INDEX, STYLE_SMALL_CODE,
                             allocation_advice, benchmark_by_key)
 from xquant.sources import chinabond, csindex, danjuan, legulegu
 
@@ -249,8 +250,9 @@ def compute_metrics(conn, bond_key: str = DEFAULT_BOND_BENCHMARK) -> dict:
         store.upsert_metric(conn, erp_rows)
 
         erp_values = [r["value"] for r in erp_rows]
-        for wname, wsize in PERCENTILE_WINDOWS.items():
-            pcts = metrics.percentile_series(erp_values, wsize)
+        erp_dates = [r["date"] for r in erp_rows]
+        for wname, years in PERCENTILE_WINDOWS.items():
+            pcts = metrics.percentile_series_by_year(erp_dates, erp_values, years)
             store.upsert_metric(conn, [
                 {"index_code": spec.code, "date": r["date"], "metric": f"erp_pct_{wname}",
                  "value": p, "freq": "daily", "source": "master"}
@@ -264,21 +266,26 @@ def compute_metrics(conn, bond_key: str = DEFAULT_BOND_BENCHMARK) -> dict:
         store.delete_metric(conn, code, "dy_spread")
         store.upsert_metric(conn, _dividend_spread_rows(conn, code, bond_map))
 
-    # 风格利差：中证500 - 中证1000
-    s500 = dict(store.fetch_metric(conn, "000905", "erp"))
-    s1000 = dict(store.fetch_metric(conn, "000852", "erp"))
+    # 风格利差：沪深300（大盘） - 中证1000（小盘）
+    big = dict(store.fetch_metric(conn, STYLE_BIG_CODE, "erp"))
+    small = dict(store.fetch_metric(conn, STYLE_SMALL_CODE, "erp"))
     style_rows = []
-    for d in sorted(set(s500) & set(s1000)):
-        style_rows.append({"index_code": "STYLE_500_1000", "date": d, "metric": "style_spread",
-                           "value": s500[d] - s1000[d], "freq": "daily", "source": "master"})
-    store.delete_metric(conn, "STYLE_500_1000", "style_spread")
-    store.delete_metric(conn, "STYLE_500_1000", "style_pct")
+    for d in sorted(set(big) & set(small)):
+        style_rows.append({"index_code": STYLE_INDEX, "date": d, "metric": "style_spread",
+                           "value": big[d] - small[d], "freq": "daily", "source": "master"})
+    # 清理旧口径（中证500 - 中证1000）的残留
+    for legacy in ("STYLE_500_1000",):
+        store.delete_metric(conn, legacy, "style_spread")
+        store.delete_metric(conn, legacy, "style_pct")
+    store.delete_metric(conn, STYLE_INDEX, "style_spread")
+    store.delete_metric(conn, STYLE_INDEX, "style_pct")
     store.upsert_metric(conn, style_rows)
     if style_rows:
         vals = [r["value"] for r in style_rows]
-        pcts = metrics.percentile_series(vals, PERCENTILE_WINDOWS["10y"])
+        dates = [r["date"] for r in style_rows]
+        pcts = metrics.percentile_series_by_year(dates, vals, PERCENTILE_WINDOWS["10y"])
         store.upsert_metric(conn, [
-            {"index_code": "STYLE_500_1000", "date": r["date"], "metric": "style_pct",
+            {"index_code": STYLE_INDEX, "date": r["date"], "metric": "style_pct",
              "value": p, "freq": "daily", "source": "master"}
             for r, p in zip(style_rows, pcts) if p is not None
         ])
@@ -293,8 +300,9 @@ def ensure_percentiles(conn) -> int:
         if not erp or store.fetch_metric(conn, spec.code, "erp_pct_10y"):
             continue
         values = [v for _, v in erp]
-        for wname, wsize in PERCENTILE_WINDOWS.items():
-            pcts = metrics.percentile_series(values, wsize)
+        dates = [d for d, _ in erp]
+        for wname, years in PERCENTILE_WINDOWS.items():
+            pcts = metrics.percentile_series_by_year(dates, values, years)
             store.delete_metric(conn, spec.code, f"erp_pct_{wname}")
             store.upsert_metric(conn, [
                 {"index_code": spec.code, "date": d, "metric": f"erp_pct_{wname}",
@@ -303,13 +311,14 @@ def ensure_percentiles(conn) -> int:
             ])
         filled += 1
 
-    spread = store.fetch_metric(conn, "STYLE_500_1000", "style_spread")
-    if spread and not store.fetch_metric(conn, "STYLE_500_1000", "style_pct"):
+    spread = store.fetch_metric(conn, STYLE_INDEX, "style_spread")
+    if spread and not store.fetch_metric(conn, STYLE_INDEX, "style_pct"):
         values = [v for _, v in spread]
-        pcts = metrics.percentile_series(values, PERCENTILE_WINDOWS["10y"])
-        store.delete_metric(conn, "STYLE_500_1000", "style_pct")
+        dates = [d for d, _ in spread]
+        pcts = metrics.percentile_series_by_year(dates, values, PERCENTILE_WINDOWS["10y"])
+        store.delete_metric(conn, STYLE_INDEX, "style_pct")
         store.upsert_metric(conn, [
-            {"index_code": "STYLE_500_1000", "date": d, "metric": "style_pct",
+            {"index_code": STYLE_INDEX, "date": d, "metric": "style_pct",
              "value": p, "freq": "daily", "source": "master"}
             for (d, _), p in zip(spread, pcts) if p is not None
         ])
@@ -330,12 +339,16 @@ def _dividend_spread_rows(conn, index_code: str, bond_map: dict) -> list[dict]:
     return rows
 
 
-def _stats(navs: list[float]) -> dict:
-    """净值序列 → 年化收益/波动/最大回撤。"""
+def _stats(navs: list[float], years: float | None = None) -> dict:
+    """净值序列 → 年化收益/波动/最大回撤。
+
+    years 为实际日历跨度；不传时沿用 252 个交易日/年的近似。
+    """
     if len(navs) < 2:
         return {"cagr": None, "vol": None, "max_drawdown": None, "total_return": None}
     rets = [navs[i] / navs[i - 1] - 1 for i in range(1, len(navs))]
-    years = len(rets) / 252
+    if years is None:
+        years = len(rets) / 252
     total = navs[-1] / navs[0] - 1
     cagr = (navs[-1] / navs[0]) ** (1 / years) - 1 if years > 0 else None
     vol = statistics.pstdev(rets) * (252 ** 0.5) if len(rets) > 1 else None
@@ -350,7 +363,8 @@ def run_backtest(conn, index_code: str = "000300",
                  bond_key: str = DEFAULT_BOND_BENCHMARK) -> dict:
     """按 ERP 分位映射规则在 股票 与 债券 之间切换的规则回测。
 
-    月度调仓：每月最后一个交易日按当月 ERP 的全历史分位决定次月权益权重（取仓位区间中值）。
+    月末调仓：每月最后一个交易日按当月 ERP 的全历史分位决定次月权益权重（取仓位区间中值）。
+    口径：股票腿为价格指数（不含股息），债券腿按当日 10Y 收益率计票息（不含价格波动）。
     """
     bench = benchmark_by_key(bond_key)
     erp = store.fetch_metric(conn, index_code, "erp")
@@ -367,6 +381,7 @@ def run_backtest(conn, index_code: str = "000300",
     month_last: dict[str, str] = {}
     for d in dates:
         month_last[d[:7]] = d
+    years = (date.fromisoformat(dates[-1]) - date.fromisoformat(dates[0])).days / 365.25
 
     strategy_nav, equity_nav, bond_nav = [1.0], [1.0], [1.0]
     weight, switches, prev_weight = 0.5, 0, None
@@ -390,10 +405,12 @@ def run_backtest(conn, index_code: str = "000300",
         "index": index_code,
         "benchmark": bench.label,
         "period": [dates[0], dates[-1]],
+        "rebalances": len(month_last),
         "switches": switches,
-        "strategy": _stats(strategy_nav),
-        "equity_only": _stats(equity_nav),
-        "bond_only": _stats(bond_nav),
+        "basis": "price_equity_coupon_bond",
+        "strategy": _stats(strategy_nav, years),
+        "equity_only": _stats(equity_nav, years),
+        "bond_only": _stats(bond_nav, years),
     }
 
 
@@ -489,26 +506,34 @@ def snapshot_payload(conn, bond_key: str = DEFAULT_BOND_BENCHMARK) -> dict:
             indexes.append({"code": spec.code, "name": spec.name, "group": spec.group,
                             "erp": None, "pe": None, "date": None, "percentile": None,
                             "temperature": "未知", "history_start": None,
-                            "allocation": None, "dividend_spread": None})
+                            "allocation": None, "dividend_spread": None, "windows": {}})
             continue
         latest = erp_series[-1]
-        pct = None
-        for wname in ("10y", "all", "5y", "3y"):
+        windows = {}
+        for wname in PERCENTILE_WINDOWS:
             rows = store.fetch_metric(conn, spec.code, f"erp_pct_{wname}")
-            if rows:
-                pct = rows[-1][1]
-                break
-        adv = allocation_advice(pct)
+            if not rows:
+                continue
+            p = rows[-1][1]
+            adv_w = allocation_advice(p)
+            windows[wname] = {
+                "percentile": p,
+                "temperature": metrics.temperature(p),
+                "allocation": {"equity_min": adv_w[0], "equity_max": adv_w[1]} if adv_w else None,
+            }
+        primary = windows.get("10y") or next(iter(windows.values()), {})
+        pct = primary.get("percentile")
         indexes.append({
             "code": spec.code, "name": spec.name, "group": spec.group,
             "erp": latest[1],
             "pe": pe_series[-1][1] if pe_series else None,
             "date": latest[0],
             "percentile": pct,
-            "temperature": metrics.temperature(pct),
+            "temperature": primary.get("temperature", "未知"),
             "history_start": erp_series[0][0],
             "dividend_spread": dy_series[-1][1] if dy_series else None,
-            "allocation": {"equity_min": adv[0], "equity_max": adv[1]} if adv else None,
+            "allocation": primary.get("allocation"),
+            "windows": windows,
         })
 
     market = []
@@ -519,8 +544,8 @@ def snapshot_payload(conn, bond_key: str = DEFAULT_BOND_BENCHMARK) -> dict:
         market.append({"code": code, "name": name, "latest": rows[-1][1],
                        "date": rows[-1][0], "history_start": rows[0][0]})
 
-    style = store.fetch_metric(conn, "STYLE_500_1000", "style_spread")
-    style_pct = store.fetch_metric(conn, "STYLE_500_1000", "style_pct")
+    style = store.fetch_metric(conn, STYLE_INDEX, "style_spread")
+    style_pct = store.fetch_metric(conn, STYLE_INDEX, "style_pct")
     bond_series = store.fetch_bond_yield(conn, bench.curve, bench.tenor)
     return {
         "generated_at": datetime.now(CST).isoformat(timespec="seconds"),

@@ -13,7 +13,7 @@ def seeded_conn():
          "freq": "daily", "source": "master"},
         {"index_code": "000300", "date": "2026-01-02", "metric": "dy_spread", "value": 0.8,
          "freq": "daily", "source": "master"},
-        {"index_code": "STYLE_500_1000", "date": "2026-01-02", "metric": "style_spread",
+        {"index_code": "STYLE_300_1000", "date": "2026-01-02", "metric": "style_spread",
          "value": 1.67, "freq": "daily", "source": "master"},
     ])
     store.upsert_bond_yield(conn, [

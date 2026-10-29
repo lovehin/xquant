@@ -74,6 +74,43 @@ def percentile_series(values: Sequence[float], window: int | None,
     return out
 
 
+def percentile_series_by_year(dates: Sequence[str], values: Sequence[float],
+                              years: float | None,
+                              min_samples: int = MIN_PERCENTILE_SAMPLES) -> list[float | None]:
+    """按日历窗口（years 年）计算滚动分位；years=None 表示全历史。
+
+    与 percentile_series 的区别：窗口按日期截断，而不是按观测条数。
+    交易日序列每年约 240-250 条，用条数近似年份会显著放大窗口。
+    dates 必须升序且与 values 等长；窗口为 [date_i - years, date_i]。
+    """
+    import bisect
+    from datetime import date as _date
+
+    import numpy as np
+
+    if len(dates) != len(values):
+        raise ValueError("dates and values must have the same length")
+    if not dates:
+        return []
+    ords = [_date.fromisoformat(d).toordinal() for d in dates]
+    arr = np.asarray([np.nan if v is None else float(v) for v in values], dtype=float)
+    span = None if years is None else int(round(years * 365.25))
+    out: list[float | None] = [None] * arr.size
+    for i in range(arr.size):
+        v = arr[i]
+        if np.isnan(v):
+            continue
+        lo = 0 if span is None else bisect.bisect_left(ords, ords[i] - span)
+        seg = arr[lo:i + 1]
+        valid = seg[~np.isnan(seg)]
+        if valid.size < min_samples:
+            continue
+        below = int(np.count_nonzero(valid < v))
+        equal = int(np.count_nonzero(valid == v))
+        out[i] = (below + 0.5 * equal) / valid.size * 100.0
+    return out
+
+
 def temperature(pct: float | None) -> str:
     """ERP 分位 → 估值温度。
 
@@ -123,11 +160,11 @@ def merge_bond(pe_series: Sequence[tuple[str, float]],
 
 
 def style_signal(spread_pct: float | None) -> str:
-    """风格利差分位：正=小盘占优，负=大盘占优。"""
+    """风格利差分位（ERP(沪深300) − ERP(中证1000)）：正=大盘占优，负=小盘占优。"""
     if spread_pct is None:
         return "未知"
     if spread_pct >= 60:
-        return "小盘占优"
-    if spread_pct <= 40:
         return "大盘占优"
+    if spread_pct <= 40:
+        return "小盘占优"
     return "均衡"

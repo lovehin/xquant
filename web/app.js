@@ -88,6 +88,27 @@
     return c;
   }
 
+  const WINDOW_YEARS = { "3y": 3, "5y": 5, "10y": 10, all: null };
+  const WINDOW_LABEL = { "3y": "近3年", "5y": "近5年", "10y": "近10年", all: "全历史" };
+
+  // 股息率来源：市场级来自乐咕，创业板来自蛋卷，其余中证官方
+  function dividendSource(code) {
+    if (code.startsWith("MKT_")) return "乐咕乐股市场股息率";
+    if (code === "399006") return "蛋卷快照股息率";
+    return "中证官方股息率（计算用股本口径）";
+  }
+
+  // 按日历年份截取窗口（与后端 percentile_series_by_year 一致）
+  function sliceByWindow(points, win) {
+    const years = WINDOW_YEARS[win];
+    if (!years || !points.length) return points;
+    const last = points[points.length - 1][0];
+    const d = new Date(last + "T00:00:00Z");
+    d.setUTCFullYear(d.getUTCFullYear() - years);
+    const cut = d.toISOString().slice(0, 10);
+    return points.filter((p) => p[0] >= cut);
+  }
+
   function quantileLines(values, lowPct, highPct) {
     const sorted = values.slice().sort((a, b) => a - b);
     if (!sorted.length) return [];
@@ -118,16 +139,19 @@
           areaStyle: { color: "rgba(37,99,235,0.08)" },
           markLine: {
             silent: true, symbol: "none", label: { formatter: "{b}" },
-            data: quantileLines(values, 30, 70),
+            data: quantileLines(sliceByWindow(points, win).map((p) => p[1]), 30, 70),
           },
         },
       ],
     });
     const spec = state.snapshot.indexes.find((i) => i.code === code);
+    const w = (spec && spec.windows && spec.windows[win]) || {};
+    const pct = w.percentile !== undefined ? w.percentile : spec && spec.percentile;
+    const temp = w.temperature || (spec && spec.temperature);
     document.getElementById("erp-caption").textContent =
       `口径：中证官方近四季滚动市盈率(TTM) ÷ 100 − ${state.snapshot.bond.label}；` +
       `序列 ${points.length ? points[0][0] : "—"} ~ ${points.length ? points[points.length - 1][0] : "—"}；` +
-      `当前 ${fmt(spec && spec.erp)}%（${spec ? spec.temperature : "—"}，近${win === "all" ? "全历史" : win.replace("y", "年")}分位 ${fmt(spec && spec.percentile, 0)}%）。`;
+      `当前 ${fmt(spec && spec.erp)}%（${temp || "—"}，${WINDOW_LABEL[win]}分位 ${fmt(pct, 0)}%）。`;
   }
 
   async function renderDY() {
@@ -154,7 +178,7 @@
       }],
     });
     document.getElementById("dy-caption").textContent =
-      `口径：中证官方股息率（计算用股本口径） − ${state.snapshot.bond.label}；` +
+      `口径：${dividendSource(code)} − ${state.snapshot.bond.label}；` +
       `序列 ${points.length ? points[0][0] : "—"} ~ ${points.length ? points[points.length - 1][0] : "—"}。`;
   }
 
@@ -205,7 +229,7 @@
     });
     document.getElementById("style-caption").textContent =
       `最新 ${fmt(data.latest && data.latest[1])}%，近10年分位 ${fmt(data.percentile, 0)}%，信号：${data.signal}` +
-      `（分位高=小盘 ERP 更高=小盘占优）`;
+      `（分位高=沪深300 相对1000 更便宜=大盘占优）`;
   }
 
   async function renderAllocation() {
@@ -219,9 +243,12 @@
     let btHtml = "";
     if (bt.available) {
       const pct = (v) => (v === null || v === undefined ? "—" : (v * 100).toFixed(1) + "%");
+      const sched = bt.rebalances !== undefined
+        ? `月末决策 ${bt.rebalances} 次 / 仓位变化 ${bt.switches} 次`
+        : `仓位变化 ${bt.switches} 次`;
       btHtml = `<h3 class="subtitle">规则回测：沪深300 vs ${bt.benchmark}
-        （${bt.period[0]} ~ ${bt.period[1]}，月度调仓 ${bt.switches} 次）</h3>
-        <table><thead><tr><th>组合</th><th>年化收益</th><th>年化波动</th><th>最大回撤</th><th>累计收益</th></tr></thead>
+        （${bt.period[0]} ~ ${bt.period[1]}，${sched}）</h3>
+        <table><thead><tr><th>组合</th><th>年化收益*</th><th>年化波动</th><th>最大回撤</th><th>累计收益</th></tr></thead>
         <tbody>
           <tr><td>股债切换（按 ERP 分位）</td><td>${pct(bt.strategy.cagr)}</td><td>${pct(bt.strategy.vol)}</td>
               <td>${pct(bt.strategy.max_drawdown)}</td><td>${pct(bt.strategy.total_return)}</td></tr>
@@ -229,12 +256,13 @@
               <td>${pct(bt.equity_only.max_drawdown)}</td><td>${pct(bt.equity_only.total_return)}</td></tr>
           <tr><td>满仓债券</td><td>${pct(bt.bond_only.cagr)}</td><td>${pct(bt.bond_only.vol)}</td>
               <td>${pct(bt.bond_only.max_drawdown)}</td><td>${pct(bt.bond_only.total_return)}</td></tr>
-        </tbody></table>`;
+        </tbody></table>
+        <p class="caption">* 价格口径：股票腿为沪深300价格指数（不含股息），债券腿按 10Y 票息计息（不含价格波动），未计交易成本；收益偏低，仅作规则对照。</p>`;
     } else {
       btHtml = `<p class="caption">回测样本不足，暂不展示（${bt.reason || "数据不足"}）。</p>`;
     }
     document.getElementById("allocation-table").innerHTML =
-      `<table><thead><tr><th>指数</th><th>ERP %</th><th>分位</th><th>状态</th><th>建议权益仓位</th></tr></thead>
+      `<table><thead><tr><th>指数</th><th>ERP %</th><th>分位(10年)</th><th>状态</th><th>建议权益仓位</th></tr></thead>
        <tbody>${rows}</tbody></table>
        <p class="caption">规则：ERP 分位 ≤10% → 权益 0–20%；≤30% → 20–40%；≤70% → 40–60%；≤90% → 60–80%；其余 → 80–100%。<br>注：ERP 分位越高代表股票相对债券越便宜，故仓位随分位递增。</p>
        ${btHtml}`;

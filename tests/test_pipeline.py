@@ -37,9 +37,9 @@ def test_compute_metrics_writes_market_dividend_spread(conn):
 
 def test_compute_metrics_writes_style_spread(conn):
     pipeline.compute_metrics(conn)
-    style = store.fetch_metric(conn, "STYLE_500_1000", "style_spread")
-    # ERP(500)=1/20*100-1.7=3.3；ERP(1000)=1/30*100-1.7=1.6333；差=1.6667
-    assert style[0][1] == pytest.approx(1.66667, abs=1e-4)
+    style = store.fetch_metric(conn, "STYLE_300_1000", "style_spread")
+    # ERP(300)=1/12*100-1.7=6.6333；ERP(1000)=1/30*100-1.7=1.6333；差=5.0
+    assert style[0][1] == pytest.approx(5.0, abs=1e-4)
 
 
 def test_run_without_network_recomputes_and_exports(tmp_path, conn):

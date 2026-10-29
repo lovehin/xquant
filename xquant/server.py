@@ -14,8 +14,8 @@ from fastapi.staticfiles import StaticFiles
 
 from xquant import bundle, metrics, pipeline, store
 from xquant.config import (ALLOCATION_MAP, BACKTEST_INDEX, BUNDLE_PATH, DB_PATH,
-                            DEFAULT_BOND_BENCHMARK, INDEXES, PERCENTILE_WINDOWS, WEB_DIR,
-                            benchmark_by_key)
+                            DEFAULT_BOND_BENCHMARK, INDEXES, PERCENTILE_WINDOWS, STYLE_INDEX,
+                            WEB_DIR, benchmark_by_key)
 
 _refresh_lock = threading.Lock()
 _refresh_state = {"running": False, "started_at": None, "finished_at": None, "error": None}
@@ -71,7 +71,8 @@ def create_app(db_path: str | Path | None = None,
         if not rows:
             erp = store.fetch_metric(c, index_code, "erp")
             values = [v for _, v in erp]
-            pcts = metrics.percentile_series(values, PERCENTILE_WINDOWS[wname])
+            dates = [d for d, _ in erp]
+            pcts = metrics.percentile_series_by_year(dates, values, PERCENTILE_WINDOWS[wname])
             rows = [(d, p) for (d, _), p in zip(erp, pcts) if p is not None]
         with cache_lock:
             pct_cache[key] = rows
@@ -94,7 +95,7 @@ def create_app(db_path: str | Path | None = None,
     def series(index: str = Query(...), metric: str = Query("erp"),
                window: str | None = Query(None)):
         spec = next((i for i in INDEXES if i.code == index), None)
-        if spec is None and index not in ("STYLE_500_1000",) and not index.startswith("MKT_"):
+        if spec is None and index not in (STYLE_INDEX,) and not index.startswith("MKT_"):
             raise HTTPException(status_code=404, detail=f"unknown index {index}")
         c = conn()
         try:
@@ -136,11 +137,12 @@ def create_app(db_path: str | Path | None = None,
         c = conn()
         try:
             sync_bundle(c)
-            spread = store.fetch_metric(c, "STYLE_500_1000", "style_spread")
-            pct = store.fetch_metric(c, "STYLE_500_1000", "style_pct")
+            spread = store.fetch_metric(c, STYLE_INDEX, "style_spread")
+            pct = store.fetch_metric(c, STYLE_INDEX, "style_pct")
             if not pct:
                 values = [v for _, v in spread]
-                pcts = metrics.percentile_series(values, PERCENTILE_WINDOWS["10y"])
+                dates = [d for d, _ in spread]
+                pcts = metrics.percentile_series_by_year(dates, values, PERCENTILE_WINDOWS["10y"])
                 pct = [(d, p) for (d, _), p in zip(spread, pcts) if p is not None]
             return {
                 "points": [[d, v] for d, v in spread],

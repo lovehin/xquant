@@ -13,7 +13,7 @@ from pathlib import Path
 
 from xquant import bundle, pipeline, store
 from xquant.config import (ALLOCATION_MAP, BACKTEST_INDEX, BUNDLE_PATH, DB_PATH, INDEXES,
-                           MARKET_DIVIDEND_SERIES, SNAPSHOT_PATH, WEB_DIR)
+                           MARKET_DIVIDEND_SERIES, SNAPSHOT_PATH, STYLE_INDEX, WEB_DIR)
 
 
 def build_bundle_data(conn, snapshot: dict | None = None) -> dict:
@@ -43,8 +43,8 @@ def build_bundle_data(conn, snapshot: dict | None = None) -> dict:
             values[position[d]] = round(float(v), 4)
         series[series_id] = values
 
-    style = store.fetch_metric(conn, "STYLE_500_1000", "style_spread")
-    style_pct = store.fetch_metric(conn, "STYLE_500_1000", "style_pct")
+    style = store.fetch_metric(conn, STYLE_INDEX, "style_spread")
+    style_pct = store.fetch_metric(conn, STYLE_INDEX, "style_pct")
     backtest = pipeline.run_backtest(conn, index_code=BACKTEST_INDEX)
 
     return {

@@ -11,7 +11,7 @@ import csv
 from pathlib import Path
 
 from xquant import store
-from xquant.config import BACKTEST_INDEX, BOND_BENCHMARKS
+from xquant.config import BACKTEST_INDEX, BOND_BENCHMARKS, STYLE_INDEX
 
 SERIES_HEADER = ["series_id", "date", "value"]
 
@@ -42,7 +42,7 @@ def write_bundle(conn, path: str | Path) -> Path:
     只导出网页与回测真正需要的序列，控制文件体积：
       erp:*        各指数格雷厄姆指数（主序列）
       dy:*         股息率差（指数 + 市场级）
-      style:spread 大小盘风格利差
+      style:spread 大小盘风格利差（沪深300 − 中证1000）
       bond:*       债券基准收益率（仅 config.BOND_BENCHMARKS 里的组合）
       price:*      回测用行情（仅 config.BACKTEST_INDEX）
     PE 历史与分位序列不入包：当前 PE 在 snapshot.json，分位由服务端按需计算。
@@ -58,8 +58,8 @@ def write_bundle(conn, path: str | Path) -> Path:
             rows.append((f"{prefix}:{r['index_code']}", r["date"], float(r["value"])))
 
     for r in conn.execute(
-            "SELECT date, value FROM metric_series WHERE index_code='STYLE_500_1000'"
-            " AND metric='style_spread' AND value IS NOT NULL ORDER BY date"):
+            "SELECT date, value FROM metric_series WHERE index_code=?"
+            " AND metric='style_spread' AND value IS NOT NULL ORDER BY date", (STYLE_INDEX,)):
         rows.append(("style:spread", r["date"], float(r["value"])))
 
     wanted = {(b.curve, b.tenor) for b in BOND_BENCHMARKS}
@@ -125,7 +125,7 @@ def import_bundle(conn, path: str | Path) -> int:
         if series_id.startswith("style:"):
             metric = "style_spread" if series_id.endswith("spread") else "style_pct"
             for date, value in points:
-                metrics_rows.append({"index_code": "STYLE_500_1000", "date": date,
+                metrics_rows.append({"index_code": STYLE_INDEX, "date": date,
                                      "metric": metric, "value": value,
                                      "freq": "daily", "source": "bundle"})
             continue

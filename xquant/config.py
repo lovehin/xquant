@@ -89,7 +89,14 @@ DEFAULT_BOND_BENCHMARK = "bond10y"
 # 规则回测使用的指数
 BACKTEST_INDEX = "000300"
 
-PERCENTILE_WINDOWS: dict[str, int | None] = {"3y": 1095, "5y": 1825, "10y": 3650, "all": None}
+# 分位窗口按「日历年份」定义（None=全历史）。序列是交易日，不能用交易日数近似年份：
+# 旧的 1095/1825/3650 实际跨 4.4/7.3/14.6 年，会把「近10年」算成近15年。
+PERCENTILE_WINDOWS: dict[str, int | None] = {"3y": 3, "5y": 5, "10y": 10, "all": None}
+
+# 风格利差：沪深300（大盘） − 中证1000（小盘）
+STYLE_BIG_CODE = "000300"
+STYLE_SMALL_CODE = "000852"
+STYLE_INDEX = "STYLE_300_1000"
 
 # 权益仓位参考映射表（按 ERP 分位从低到高），可自行调整
 # ERP 分位越高 = 股票相对债券越便宜 = 建议权益仓位越高（注意与 PE 分位方向相反）

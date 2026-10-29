@@ -37,6 +37,24 @@ def test_percentile_series_window_limits():
     assert out[-1] == pytest.approx(95.0)  # 窗口 [90..99] 中值 99 → (9+0.5)/10
 
 
+def test_percentile_series_by_year_uses_calendar_window():
+    # 每年一个观测，共 11 年；3 年窗口应只看最近 4 个年度点（2022-2025）
+    dates = [f"{y}-01-15" for y in range(2015, 2026)]
+    values = [float(i) for i in range(11)]
+    out = metrics.percentile_series_by_year(dates, values, years=3, min_samples=2)
+    assert out[-1] == pytest.approx((3 + 0.5) / 4 * 100)  # 7,8,9,10 中的最高值
+    # 全历史：最后一个值处于最高位
+    full = metrics.percentile_series_by_year(dates, values, years=None, min_samples=2)
+    assert full[-1] == pytest.approx((10 + 0.5) / 11 * 100)
+    # 样本不足窗口返回 None
+    assert out[0] is None
+
+
+def test_percentile_series_by_year_requires_matching_length():
+    with pytest.raises(ValueError):
+        metrics.percentile_series_by_year(["2026-01-02"], [1.0, 2.0], 3)
+
+
 def test_percentile_series_matches_pointwise_reference():
     """向量化实现必须与逐点 percentile_rank 结果一致。"""
     values = [3.0, 1.0, 4.0, 1.0, 5.0, 9.0, 2.0, 6.0] * 20
@@ -81,6 +99,7 @@ def test_temperature_bands():
 
 
 def test_style_signal():
-    assert metrics.style_signal(80) == "小盘占优"
-    assert metrics.style_signal(20) == "大盘占优"
+    # 利差 = ERP(沪深300) - ERP(中证1000)：分位高=大盘占优
+    assert metrics.style_signal(80) == "大盘占优"
+    assert metrics.style_signal(20) == "小盘占优"
     assert metrics.style_signal(None) == "未知"
