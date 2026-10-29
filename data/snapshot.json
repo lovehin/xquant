@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-29T16:40:20+08:00",
+  "generated_at": "2026-10-29T17:13:02+08:00",
   "bond": {
     "key": "bond10y",
     "label": "10年期国债",
@@ -1052,324 +1052,324 @@
   },
   "quality": [
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "chinabond",
       "status": "ok",
       "rows": 107964,
       "message": "from 20060101",
-      "duration_ms": 86804
+      "duration_ms": 81071
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8976,
       "message": "000300",
-      "duration_ms": 3090
+      "duration_ms": 4273
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000905",
-      "duration_ms": 3077
+      "duration_ms": 5700
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8798,
       "message": "000852",
-      "duration_ms": 1839
+      "duration_ms": 3858
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000985",
-      "duration_ms": 1758
+      "duration_ms": 3869
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000016",
-      "duration_ms": 3080
+      "duration_ms": 3953
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 3204,
       "message": "000688",
-      "duration_ms": 2247
+      "duration_ms": 3006
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000922",
-      "duration_ms": 1535
+      "duration_ms": 3811
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000015",
-      "duration_ms": 1917
+      "duration_ms": 3054
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000906",
-      "duration_ms": 2634
+      "duration_ms": 3832
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000928",
-      "duration_ms": 2967
+      "duration_ms": 4491
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000929",
-      "duration_ms": 2453
+      "duration_ms": 67098
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000930",
-      "duration_ms": 2934
+      "duration_ms": 4685
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000931",
-      "duration_ms": 2588
+      "duration_ms": 3255
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000932",
-      "duration_ms": 2629
+      "duration_ms": 4033
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000933",
-      "duration_ms": 4916
+      "duration_ms": 3720
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000934",
-      "duration_ms": 2674
+      "duration_ms": 2102
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000935",
-      "duration_ms": 2602
+      "duration_ms": 2760
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000936",
-      "duration_ms": 1858
+      "duration_ms": 5336
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "csindex",
       "status": "ok",
       "rows": 8978,
       "message": "000937",
-      "duration_ms": 1436
+      "duration_ms": 3666
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000300",
-      "duration_ms": 1649
+      "duration_ms": 617
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000905",
-      "duration_ms": 653
+      "duration_ms": 712
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000852",
-      "duration_ms": 680
+      "duration_ms": 677
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000016",
-      "duration_ms": 703
+      "duration_ms": 789
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 353,
       "message": "000688",
-      "duration_ms": 507
+      "duration_ms": 692
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "399006",
-      "duration_ms": 633
+      "duration_ms": 603
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000922",
-      "duration_ms": 772
+      "duration_ms": 552
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000015",
-      "duration_ms": 689
+      "duration_ms": 758
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 0,
       "message": "000906",
-      "duration_ms": 496
+      "duration_ms": 702
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "danjuan_snapshot",
       "status": "ok",
       "rows": 63,
       "message": "",
-      "duration_ms": 555
+      "duration_ms": 713
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 259,
       "message": "000300",
-      "duration_ms": 1552
+      "duration_ms": 1926
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 238,
       "message": "000905",
-      "duration_ms": 1378
+      "duration_ms": 1835
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 145,
       "message": "000852",
-      "duration_ms": 1395
+      "duration_ms": 1854
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 262,
       "message": "000016",
-      "duration_ms": 1492
+      "duration_ms": 1837
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 262,
       "message": "000015",
-      "duration_ms": 1836
+      "duration_ms": 1923
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 238,
       "message": "000906",
-      "duration_ms": 1426
+      "duration_ms": 1791
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "legulegu_gxl:MKT_GEM",
       "status": "ok",
       "rows": 4126,
       "message": "",
-      "duration_ms": 1792
+      "duration_ms": 2253
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "legulegu_gxl:MKT_SH",
       "status": "ok",
       "rows": 5297,
       "message": "",
-      "duration_ms": 2491
+      "duration_ms": 2470
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "legulegu_gxl:MKT_STAR",
       "status": "ok",
       "rows": 1761,
       "message": "",
-      "duration_ms": 1829
+      "duration_ms": 2259
     },
     {
-      "ts": "2026-10-29T08:40:14+00:00",
+      "ts": "2026-10-29T09:12:57+00:00",
       "source": "legulegu_gxl:MKT_SZ",
       "status": "ok",
       "rows": 5297,
       "message": "",
-      "duration_ms": 1823
+      "duration_ms": 2364
     }
   ]
 }
