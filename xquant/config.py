@@ -92,12 +92,13 @@ BACKTEST_INDEX = "000300"
 PERCENTILE_WINDOWS: dict[str, int | None] = {"3y": 1095, "5y": 1825, "10y": 3650, "all": None}
 
 # 权益仓位参考映射表（按 ERP 分位从低到高），可自行调整
+# ERP 分位越高 = 股票相对债券越便宜 = 建议权益仓位越高（注意与 PE 分位方向相反）
 ALLOCATION_MAP: list[AllocationBand] = [
-    AllocationBand(10, 80, 100),
-    AllocationBand(30, 60, 80),
+    AllocationBand(10, 0, 20),
+    AllocationBand(30, 20, 40),
     AllocationBand(70, 40, 60),
-    AllocationBand(90, 20, 40),
-    AllocationBand(100, 0, 20),
+    AllocationBand(90, 60, 80),
+    AllocationBand(100, 80, 100),
 ]
 
 
@@ -116,7 +117,10 @@ def benchmark_by_key(key: str) -> BondBenchmark | None:
 
 
 def allocation_advice(pct: float | None) -> tuple[int, int] | None:
-    """ERP 分位 → 建议权益仓位区间 (下限%, 上限%)。分位为 None 或越界返回 None。"""
+    """ERP 分位 → 建议权益仓位区间 (下限%, 上限%)。分位越高（越便宜）仓位越高。
+
+    分位为 None 或越界返回 None。
+    """
     if pct is None:
         return None
     if pct < 0 or pct > 100:

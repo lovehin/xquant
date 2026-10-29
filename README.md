@@ -35,9 +35,10 @@ python3.12 -m venv .venv
 |---|---|
 | 格雷厄姆指数 / ERP | `1/PE(TTM)×100 − 10年期国债收益率` |
 | ERP 分位 | ERP 在近 3/5/10 年或全历史中的分位（0-100），中位秩法，样本 < 60 时不给值 |
+| 估值温度 | ERP 分位 → 便宜/偏低/中性/偏贵/很贵。ERP 是 PE 的倒数类指标，**分位越高越便宜** |
 | 股息率差 | `指数股息率 − 10年期国债收益率` |
 | 风格利差 | `ERP(中证500) − ERP(中证1000)`，取分位判定大小盘风格 |
-| 配置参考 | ERP 分位 → 建议权益仓位区间（规则映射，见 `xquant/config.py` 的 `ALLOCATION_MAP`） |
+| 配置参考 | ERP 分位越高（股票相对债券越便宜）→ 建议权益仓位越高（规则映射，见 `xquant/config.py` 的 `ALLOCATION_MAP`） |
 | 规则回测 | 按上述映射在沪深300 与 10Y 国债间月度切换，对比满仓股票 / 满仓债券 |
 
 ## 数据源
@@ -79,7 +80,7 @@ xquant/server.py     FastAPI
 xquant/cli.py        命令行
 web/                 单页前端（ECharts 本地 vendor，不依赖 CDN；支持 API / 静态双模式）
 xquant/static_site.py  GitHub Pages 静态版构建（预生成 bundle.js）
-tests/               pytest 单测（53 个）
+tests/               pytest 单测（70 个）
 ```
 
 ## 常用命令

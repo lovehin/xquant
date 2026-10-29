@@ -71,11 +71,12 @@ def test_merge_bond_inner_joins():
 
 
 def test_temperature_bands():
-    assert metrics.temperature(5) == "便宜"
-    assert metrics.temperature(30) == "偏低"
+    # ERP 是 PE 的倒数类指标：分位越高越便宜
+    assert metrics.temperature(5) == "很贵"
+    assert metrics.temperature(30) == "偏贵"
     assert metrics.temperature(50) == "中性"
-    assert metrics.temperature(75) == "偏贵"
-    assert metrics.temperature(95) == "很贵"
+    assert metrics.temperature(75) == "偏低"
+    assert metrics.temperature(95) == "便宜"
     assert metrics.temperature(None) == "未知"
 
 

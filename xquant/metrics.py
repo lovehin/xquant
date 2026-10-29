@@ -75,17 +75,22 @@ def percentile_series(values: Sequence[float], window: int | None,
 
 
 def temperature(pct: float | None) -> str:
+    """ERP 分位 → 估值温度。
+
+    ERP = 1/PE − 债券收益率，是 PE 的倒数类指标：分位越高，说明股票相对债券
+    越便宜。因此分位高 → 便宜，分位低 → 贵（与 PE 分位的方向相反）。
+    """
     if pct is None:
         return "未知"
     if pct <= 20:
-        return "便宜"
+        return "很贵"
     if pct <= 40:
-        return "偏低"
+        return "偏贵"
     if pct <= 60:
         return "中性"
     if pct <= 80:
-        return "偏贵"
-    return "很贵"
+        return "偏低"
+    return "便宜"
 
 
 def build_daily_series(obs: Sequence[tuple[str, float]], days: Sequence[str]) -> list[tuple[str, float]]:

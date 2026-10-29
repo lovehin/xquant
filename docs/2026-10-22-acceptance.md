@@ -79,3 +79,15 @@ uv pip install --python .venv/bin/python -r requirements.txt
 .venv/bin/python -m xquant.cli update    # 首次约 3-4 分钟
 .venv/bin/python -m xquant.cli serve     # http://127.0.0.1:8848
 ```
+
+## 7. 修订（2026-10-29）
+
+ERP 分位方向此前被当作 PE 分位使用，导致「温度」与「建议权益仓位」整体反向
+（详见 `docs/superpowers/specs/2026-10-22-xquant-design.md` 第 10 节）。
+
+- 指标卡状态：沪深300 由「很贵」改为「便宜」，建议权益仓位由 20–40% 改为 60–80%
+- 规则回测（同区间、同调仓规则）由年化 1.6% / 最大回撤 −27.7%
+  改为 **年化 4.56% / 最大回撤 −25.3%**；同期满仓股票 1.97% / −46.7%，满仓债券 3.10% / 0%
+- 上表第 3 节的数值与状态列为修正前记录，保留作对照
+
+测试：`70 passed`。

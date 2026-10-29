@@ -236,7 +236,7 @@
     document.getElementById("allocation-table").innerHTML =
       `<table><thead><tr><th>指数</th><th>ERP %</th><th>分位</th><th>状态</th><th>建议权益仓位</th></tr></thead>
        <tbody>${rows}</tbody></table>
-       <p class="caption">规则：ERP 分位 ≤10% → 权益 80–100%；≤30% → 60–80%；≤70% → 40–60%；≤90% → 20–40%；其余 → 0–20%。</p>
+       <p class="caption">规则：ERP 分位 ≤10% → 权益 0–20%；≤30% → 20–40%；≤70% → 40–60%；≤90% → 60–80%；其余 → 80–100%。<br>注：ERP 分位越高代表股票相对债券越便宜，故仓位随分位递增。</p>
        ${btHtml}`;
   }
 
