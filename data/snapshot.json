@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-10-22T18:39:47+08:00",
+  "generated_at": "2026-10-29T14:12:40+08:00",
   "bond": {
     "key": "bond10y",
     "label": "10年期国债",
     "curve": "中债国债收益率曲线",
     "tenor": "10年",
     "latest": [
-      "2026-10-22",
-      1.6414
+      "2026-10-28",
+      1.6345
     ]
   },
   "indexes": [
@@ -15,77 +15,77 @@
       "code": "000300",
       "name": "沪深300",
       "group": "宽基",
-      "erp": 6.2825302694136305,
-      "pe": 12.62,
-      "date": "2026-10-22",
-      "percentile": 85.0,
-      "temperature": "很贵",
+      "erp": 6.202490595611286,
+      "pe": 12.76,
+      "date": "2026-10-28",
+      "percentile": 83.1917808219178,
+      "temperature": "便宜",
       "history_start": "2006-03-01",
-      "dividend_spread": 1.3786,
+      "dividend_spread": 1.0154999999999998,
       "allocation": {
-        "equity_min": 20,
-        "equity_max": 40
+        "equity_min": 60,
+        "equity_max": 80
       }
     },
     {
       "code": "000905",
       "name": "中证500",
       "group": "宽基",
-      "erp": 2.7580720633523974,
-      "pe": 22.73,
-      "date": "2026-10-22",
-      "percentile": 80.89041095890411,
-      "temperature": "很贵",
+      "erp": 2.7688465433729625,
+      "pe": 22.71,
+      "date": "2026-10-28",
+      "percentile": 81.10958904109589,
+      "temperature": "便宜",
       "history_start": "2007-01-31",
-      "dividend_spread": -0.04139999999999988,
+      "dividend_spread": -0.22450000000000014,
       "allocation": {
-        "equity_min": 20,
-        "equity_max": 40
+        "equity_min": 60,
+        "equity_max": 80
       }
     },
     {
       "code": "000852",
       "name": "中证1000",
       "group": "宽基",
-      "erp": 2.1208272385252074,
-      "pe": 26.58,
-      "date": "2026-10-22",
-      "percentile": 90.46434494195688,
-      "temperature": "很贵",
+      "erp": 2.120663349605708,
+      "pe": 26.63,
+      "date": "2026-10-28",
+      "percentile": 90.41073203047367,
+      "temperature": "便宜",
       "history_start": "2014-09-26",
-      "dividend_spread": -0.38139999999999996,
+      "dividend_spread": -0.49450000000000016,
       "allocation": {
-        "equity_min": 0,
-        "equity_max": 20
+        "equity_min": 80,
+        "equity_max": 100
       }
     },
     {
       "code": "000985",
       "name": "中证全指",
       "group": "全市场",
-      "erp": 4.550550464396285,
-      "pe": 16.15,
-      "date": "2026-10-22",
-      "percentile": 91.41095890410959,
-      "temperature": "很贵",
+      "erp": 4.519346153846154,
+      "pe": 16.25,
+      "date": "2026-10-28",
+      "percentile": 90.72602739726028,
+      "temperature": "便宜",
       "history_start": "2011-07-22",
-      "dividend_spread": 0.16880000000000006,
+      "dividend_spread": 0.21550000000000002,
       "allocation": {
-        "equity_min": 0,
-        "equity_max": 20
+        "equity_min": 80,
+        "equity_max": 100
       }
     },
     {
       "code": "000016",
       "name": "上证50",
       "group": "宽基",
-      "erp": 7.449509090909092,
-      "pe": 11.0,
-      "date": "2026-10-22",
-      "percentile": 66.56164383561644,
-      "temperature": "偏贵",
+      "erp": 7.374509009009009,
+      "pe": 11.1,
+      "date": "2026-10-28",
+      "percentile": 63.90410958904109,
+      "temperature": "偏低",
       "history_start": "2006-03-01",
-      "dividend_spread": 1.9585999999999997,
+      "dividend_spread": 1.3954999999999997,
       "allocation": {
         "equity_min": 40,
         "equity_max": 60
@@ -95,13 +95,13 @@
       "code": "000688",
       "name": "科创50",
       "group": "成长",
-      "erp": -0.015119303951862006,
-      "pe": 61.49,
-      "date": "2026-10-22",
-      "percentile": 62.55156157925751,
-      "temperature": "偏贵",
+      "erp": -0.0010468801045409037,
+      "pe": 61.22,
+      "date": "2026-10-28",
+      "percentile": 63.52145796590241,
+      "temperature": "偏低",
       "history_start": "2019-12-31",
-      "dividend_spread": -1.3514,
+      "dividend_spread": -1.3145,
       "allocation": {
         "equity_min": 40,
         "equity_max": 60
@@ -111,29 +111,29 @@
       "code": "399006",
       "name": "创业板指",
       "group": "成长",
-      "erp": 1.7194587666320493,
-      "pe": 29.7543,
-      "date": "2026-10-22",
-      "percentile": 97.06,
-      "temperature": "很贵",
-      "history_start": "2016-10-24",
-      "dividend_spread": -0.4014,
+      "erp": 1.722286078736774,
+      "pe": 29.7904,
+      "date": "2026-10-28",
+      "percentile": 97.1057884231537,
+      "temperature": "便宜",
+      "history_start": "2016-10-21",
+      "dividend_spread": -0.4245000000000001,
       "allocation": {
-        "equity_min": 0,
-        "equity_max": 20
+        "equity_min": 80,
+        "equity_max": 100
       }
     },
     {
       "code": "000922",
       "name": "中证红利",
       "group": "红利",
-      "erp": 9.58194455667789,
-      "pe": 8.91,
-      "date": "2026-10-22",
-      "percentile": 51.41095890410959,
+      "erp": 9.488970522803115,
+      "pe": 8.99,
+      "date": "2026-10-28",
+      "percentile": 50.369863013698634,
       "temperature": "中性",
       "history_start": "2011-06-28",
-      "dividend_spread": 2.9585999999999997,
+      "dividend_spread": 2.5955000000000004,
       "allocation": {
         "equity_min": 40,
         "equity_max": 60
@@ -143,13 +143,13 @@
       "code": "000015",
       "name": "上证红利",
       "group": "红利",
-      "erp": 9.099738560687431,
-      "pe": 9.31,
-      "date": "2026-10-22",
-      "percentile": 31.32876712328767,
-      "temperature": "偏低",
+      "erp": 9.026480810234542,
+      "pe": 9.38,
+      "date": "2026-10-28",
+      "percentile": 30.589041095890412,
+      "temperature": "偏贵",
       "history_start": "2006-03-01",
-      "dividend_spread": 2.8086,
+      "dividend_spread": 2.3655,
       "allocation": {
         "equity_min": 40,
         "equity_max": 60
@@ -159,16 +159,16 @@
       "code": "000906",
       "name": "中证800",
       "group": "宽基",
-      "erp": 5.532201147776183,
-      "pe": 13.94,
-      "date": "2026-10-22",
-      "percentile": 88.58904109589041,
-      "temperature": "很贵",
+      "erp": 5.47282054015636,
+      "pe": 14.07,
+      "date": "2026-10-28",
+      "percentile": 86.89041095890411,
+      "temperature": "便宜",
       "history_start": "2007-01-31",
-      "dividend_spread": 0.6488,
+      "dividend_spread": 0.6854999999999998,
       "allocation": {
-        "equity_min": 20,
-        "equity_max": 40
+        "equity_min": 60,
+        "equity_max": 80
       }
     }
   ],
@@ -176,147 +176,147 @@
     {
       "code": "MKT_SH",
       "name": "上证A股",
-      "latest": 1.1886,
-      "date": "2026-10-22",
+      "latest": 1.1955,
+      "date": "2026-10-28",
       "history_start": "2006-03-01"
     },
     {
       "code": "MKT_SZ",
       "name": "深证A股",
-      "latest": 0.5186000000000002,
-      "date": "2026-10-22",
+      "latest": 0.5055000000000001,
+      "date": "2026-10-28",
       "history_start": "2006-03-01"
     },
     {
       "code": "MKT_GEM",
       "name": "创业板",
-      "latest": -0.46140000000000003,
-      "date": "2026-10-22",
+      "latest": -0.47450000000000014,
+      "date": "2026-10-28",
       "history_start": "2009-11-02"
     },
     {
       "code": "MKT_STAR",
       "name": "科创板",
-      "latest": -1.0614,
-      "date": "2026-10-22",
+      "latest": -1.0445000000000002,
+      "date": "2026-10-28",
       "history_start": "2019-07-23"
     }
   ],
   "style": {
     "latest": [
-      "2026-10-22",
-      0.63724482482719
+      "2026-10-28",
+      0.6481831937672546
     ],
-    "percentile": 18.391376451077942,
+    "percentile": 20.586286849950312,
     "signal": "大盘占优"
   },
   "quality": [
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "chinabond",
       "status": "ok",
-      "rows": 107872,
-      "message": "from 20060101",
-      "duration_ms": 74821
+      "rows": 299,
+      "message": "from 20261012",
+      "duration_ms": 2427
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 7328,
+      "rows": 7336,
       "message": "000300",
-      "duration_ms": 3199
+      "duration_ms": 2635
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 7330,
+      "rows": 7338,
       "message": "000905",
-      "duration_ms": 2232
+      "duration_ms": 2810
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 6970,
+      "rows": 6978,
       "message": "000852",
-      "duration_ms": 3519
+      "duration_ms": 2242
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 7330,
+      "rows": 7338,
       "message": "000985",
-      "duration_ms": 2407
+      "duration_ms": 2606
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 7330,
+      "rows": 7338,
       "message": "000016",
-      "duration_ms": 2749
+      "duration_ms": 2142
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 3074,
+      "rows": 3082,
       "message": "000688",
-      "duration_ms": 2183
+      "duration_ms": 749
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 7330,
+      "rows": 7338,
       "message": "000922",
-      "duration_ms": 2353
+      "duration_ms": 2097
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 7330,
+      "rows": 7338,
       "message": "000015",
-      "duration_ms": 2392
+      "duration_ms": 4094
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 7330,
+      "rows": 7338,
       "message": "000906",
-      "duration_ms": 3369
+      "duration_ms": 2835
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000300",
-      "duration_ms": 720
+      "duration_ms": 1545
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 516,
+      "rows": 517,
       "message": "000905",
-      "duration_ms": 679
+      "duration_ms": 495
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000852",
-      "duration_ms": 670
+      "duration_ms": 477
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 0,
@@ -324,87 +324,87 @@
       "duration_ms": 0
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000016",
-      "duration_ms": 678
+      "duration_ms": 1539
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 352,
+      "rows": 353,
       "message": "000688",
-      "duration_ms": 713
+      "duration_ms": 374
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 516,
+      "rows": 517,
       "message": "399006",
-      "duration_ms": 661
+      "duration_ms": 404
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 517,
       "message": "000922",
-      "duration_ms": 627
+      "duration_ms": 400
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 516,
+      "rows": 517,
       "message": "000015",
-      "duration_ms": 663
+      "duration_ms": 545
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 0,
       "message": "000906",
-      "duration_ms": 658
+      "duration_ms": 386
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "danjuan_snapshot",
       "status": "ok",
       "rows": 63,
       "message": "",
-      "duration_ms": 719
+      "duration_ms": 379
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 259,
       "message": "000300",
-      "duration_ms": 1764
+      "duration_ms": 1231
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 238,
       "message": "000905",
-      "duration_ms": 1695
+      "duration_ms": 929
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 145,
       "message": "000852",
-      "duration_ms": 1593
+      "duration_ms": 1728
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 0,
@@ -412,15 +412,15 @@
       "duration_ms": 0
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 262,
       "message": "000016",
-      "duration_ms": 1797
+      "duration_ms": 636
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 0,
@@ -428,7 +428,7 @@
       "duration_ms": 0
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 0,
@@ -436,7 +436,7 @@
       "duration_ms": 0
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 0,
@@ -444,52 +444,52 @@
       "duration_ms": 0
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 262,
       "message": "000015",
-      "duration_ms": 1763
+      "duration_ms": 1457
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 238,
       "message": "000906",
-      "duration_ms": 1602
+      "duration_ms": 630
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu_gxl:MKT_GEM",
       "status": "ok",
-      "rows": 4122,
+      "rows": 4126,
       "message": "",
-      "duration_ms": 2003
+      "duration_ms": 904
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu_gxl:MKT_SH",
       "status": "ok",
-      "rows": 5293,
+      "rows": 5297,
       "message": "",
-      "duration_ms": 2144
+      "duration_ms": 3090
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu_gxl:MKT_STAR",
       "status": "ok",
-      "rows": 1757,
+      "rows": 1761,
       "message": "",
-      "duration_ms": 1948
+      "duration_ms": 2462
     },
     {
-      "ts": "2026-10-22T10:39:45+00:00",
+      "ts": "2026-10-29T06:12:38+00:00",
       "source": "legulegu_gxl:MKT_SZ",
       "status": "ok",
-      "rows": 5293,
+      "rows": 5297,
       "message": "",
-      "duration_ms": 2070
+      "duration_ms": 861
     }
   ]
 }
