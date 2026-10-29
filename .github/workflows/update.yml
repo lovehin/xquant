@@ -3,6 +3,14 @@ name: update-market-data
 on:
   schedule:
     - cron: "30 8 * * 1-5"   # 北京时间 16:30（交易日收盘后）
+  # 代码或前端改动时也跑一次，立刻重建静态站（数据提交不会触发）
+  push:
+    branches: [main]
+    paths:
+      - "xquant/**"
+      - "web/**"
+      - "requirements.txt"
+      - ".github/workflows/update.yml"
   workflow_dispatch:
 
 concurrency:
@@ -48,7 +56,9 @@ jobs:
 
   deploy-pages:
     # 静态版：把数据预生成成 bundle.js，部署到 GitHub Pages
+    # 抓数失败也照样用已发布的数据部署，避免页面停留在旧版本
     needs: update
+    if: always()
     runs-on: ubuntu-latest
     permissions:
       pages: write
