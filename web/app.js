@@ -149,7 +149,7 @@
     const pct = w.percentile !== undefined ? w.percentile : spec && spec.percentile;
     const temp = w.temperature || (spec && spec.temperature);
     document.getElementById("erp-caption").textContent =
-      `口径：中证官方近四季滚动市盈率(TTM) ÷ 100 − ${state.snapshot.bond.label}；` +
+      `口径：100 ÷ 中证官方近四季滚动市盈率(TTM) − ${state.snapshot.bond.label}；` +
       `序列 ${points.length ? points[0][0] : "—"} ~ ${points.length ? points[points.length - 1][0] : "—"}；` +
       `当前 ${fmt(spec && spec.erp)}%（${temp || "—"}，${WINDOW_LABEL[win]}分位 ${fmt(pct, 0)}%）。`;
   }
