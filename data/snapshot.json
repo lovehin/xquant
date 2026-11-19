@@ -1,1375 +1,620 @@
 {
-  "generated_at": "2026-11-19T01:28:11+08:00",
+  "generated_at": "2026-11-20T01:34:18+08:00",
   "bond": {
     "key": "bond10y",
     "label": "10年期国债",
     "curve": "中债国债收益率曲线",
     "tenor": "10年",
-    "latest": [
-      "2026-11-18",
-      1.5892
-    ]
+    "latest": null
   },
   "indexes": [
     {
       "code": "000300",
       "name": "沪深300",
       "group": "宽基",
-      "erp": 6.050219404125286,
-      "pe": 13.09,
-      "date": "2026-11-18",
-      "percentile": 83.74000000000001,
-      "temperature": "便宜",
-      "history_start": "2006-03-01",
-      "dividend_spread": 1.1408,
-      "allocation": {
-        "equity_min": 60,
-        "equity_max": 80
-      },
-      "windows": {
-        "3y": {
-          "percentile": 59.370816599732265,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "5y": {
-          "percentile": 68.54967948717949,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "10y": {
-          "percentile": 83.74000000000001,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "all": {
-          "percentile": 84.74232773595831,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000905",
       "name": "中证500",
       "group": "宽基",
-      "erp": 3.1344655644780346,
-      "pe": 21.17,
-      "date": "2026-11-18",
-      "percentile": 84.38,
-      "temperature": "便宜",
-      "history_start": "2007-01-31",
-      "dividend_spread": -0.06919999999999993,
-      "allocation": {
-        "equity_min": 60,
-        "equity_max": 80
-      },
-      "windows": {
-        "3y": {
-          "percentile": 75.1673360107095,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "5y": {
-          "percentile": 69.99198717948718,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "10y": {
-          "percentile": 84.38,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "all": {
-          "percentile": 91.7037186742118,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000852",
       "name": "中证1000",
       "group": "宽基",
-      "erp": 2.524333525298231,
-      "pe": 24.31,
-      "date": "2026-11-18",
-      "percentile": 94.17999999999999,
-      "temperature": "便宜",
-      "history_start": "2014-09-26",
-      "dividend_spread": -0.34919999999999995,
-      "allocation": {
-        "equity_min": 80,
-        "equity_max": 100
-      },
-      "windows": {
-        "3y": {
-          "percentile": 80.52208835341365,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "5y": {
-          "percentile": 88.34134615384616,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "10y": {
-          "percentile": 94.17999999999999,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "all": {
-          "percentile": 95.20435069215557,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000985",
       "name": "中证全指",
       "group": "全市场",
-      "erp": 4.645213965087282,
-      "pe": 16.04,
-      "date": "2026-11-18",
-      "percentile": 91.78,
-      "temperature": "便宜",
-      "history_start": "2011-07-22",
-      "dividend_spread": 0.3708,
-      "allocation": {
-        "equity_min": 80,
-        "equity_max": 100
-      },
-      "windows": {
-        "3y": {
-          "percentile": 73.56091030789827,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "5y": {
-          "percentile": 83.61378205128204,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "10y": {
-          "percentile": 91.78,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "all": {
-          "percentile": 93.9295039164491,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000016",
       "name": "上证50",
       "group": "宽基",
-      "erp": 6.80710562552477,
-      "pe": 11.91,
-      "date": "2026-11-18",
-      "percentile": 54.620000000000005,
-      "temperature": "中性",
-      "history_start": "2006-03-01",
-      "dividend_spread": 1.4708,
-      "allocation": {
-        "equity_min": 40,
-        "equity_max": 60
-      },
-      "windows": {
-        "3y": {
-          "percentile": 22.021419009370817,
-          "temperature": "偏贵",
-          "allocation": {
-            "equity_min": 20,
-            "equity_max": 40
-          }
-        },
-        "5y": {
-          "percentile": 24.639423076923077,
-          "temperature": "偏贵",
-          "allocation": {
-            "equity_min": 20,
-            "equity_max": 40
-          }
-        },
-        "10y": {
-          "percentile": 54.620000000000005,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "all": {
-          "percentile": 61.38776298011967,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000688",
       "name": "科创50",
       "group": "成长",
-      "erp": 0.18447860943597028,
-      "pe": 56.38,
-      "date": "2026-11-18",
-      "percentile": 72.75641025641025,
-      "temperature": "偏低",
-      "history_start": "2019-12-31",
-      "dividend_spread": -1.2691999999999999,
-      "allocation": {
-        "equity_min": 60,
-        "equity_max": 80
-      },
-      "windows": {
-        "3y": {
-          "percentile": 53.4805890227577,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "5y": {
-          "percentile": 62.54006410256411,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "10y": {
-          "percentile": 72.75641025641025,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "all": {
-          "percentile": 72.75641025641025,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "399006",
       "name": "创业板指",
       "group": "成长",
-      "erp": 2.219148661936698,
-      "pe": 26.2581,
-      "date": "2026-11-18",
-      "percentile": 99.98,
-      "temperature": "便宜",
-      "history_start": "2016-11-18",
-      "dividend_spread": -0.2691999999999999,
-      "allocation": {
-        "equity_min": 80,
-        "equity_max": 100
-      },
-      "windows": {
-        "3y": {
-          "percentile": 99.9330655957162,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "5y": {
-          "percentile": 99.9599358974359,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "10y": {
-          "percentile": 99.98,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "all": {
-          "percentile": 99.98,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000922",
       "name": "中证红利",
       "group": "红利",
-      "erp": 9.245036186348862,
-      "pe": 9.23,
-      "date": "2026-11-18",
-      "percentile": 33.82,
-      "temperature": "偏贵",
-      "history_start": "2011-06-28",
-      "dividend_spread": 2.6508000000000003,
-      "allocation": {
-        "equity_min": 40,
-        "equity_max": 60
-      },
-      "windows": {
-        "3y": {
-          "percentile": 0.33467202141900937,
-          "temperature": "很贵",
-          "allocation": {
-            "equity_min": 0,
-            "equity_max": 20
-          }
-        },
-        "5y": {
-          "percentile": 0.2003205128205128,
-          "temperature": "很贵",
-          "allocation": {
-            "equity_min": 0,
-            "equity_max": 20
-          }
-        },
-        "10y": {
-          "percentile": 33.82,
-          "temperature": "偏贵",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "all": {
-          "percentile": 49.70114345114345,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000015",
       "name": "上证红利",
       "group": "红利",
-      "erp": 9.049097872340425,
-      "pe": 9.4,
-      "date": "2026-11-18",
-      "percentile": 18.740000000000002,
-      "temperature": "很贵",
-      "history_start": "2006-03-01",
-      "dividend_spread": 2.5008,
-      "allocation": {
-        "equity_min": 20,
-        "equity_max": 40
-      },
-      "windows": {
-        "3y": {
-          "percentile": 1.0040160642570282,
-          "temperature": "很贵",
-          "allocation": {
-            "equity_min": 0,
-            "equity_max": 20
-          }
-        },
-        "5y": {
-          "percentile": 0.6009615384615385,
-          "temperature": "很贵",
-          "allocation": {
-            "equity_min": 0,
-            "equity_max": 20
-          }
-        },
-        "10y": {
-          "percentile": 18.740000000000002,
-          "temperature": "很贵",
-          "allocation": {
-            "equity_min": 20,
-            "equity_max": 40
-          }
-        },
-        "all": {
-          "percentile": 51.042269832078745,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000906",
       "name": "中证800",
       "group": "宽基",
-      "erp": 5.448097677691766,
-      "pe": 14.21,
-      "date": "2026-11-18",
-      "percentile": 84.66,
-      "temperature": "便宜",
-      "history_start": "2007-01-31",
-      "dividend_spread": 0.8308,
-      "allocation": {
-        "equity_min": 60,
-        "equity_max": 80
-      },
-      "windows": {
-        "3y": {
-          "percentile": 62.44979919678715,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "5y": {
-          "percentile": 70.55288461538461,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "10y": {
-          "percentile": 84.66,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "all": {
-          "percentile": 89.82417138237672,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000928",
       "name": "中证能源",
       "group": "行业",
-      "erp": 5.326429322268326,
-      "pe": 14.46,
-      "date": "2026-11-18",
-      "percentile": 50.1,
-      "temperature": "中性",
-      "history_start": "2015-09-01",
-      "dividend_spread": 1.9108,
-      "allocation": {
-        "equity_min": 40,
-        "equity_max": 60
-      },
-      "windows": {
-        "3y": {
-          "percentile": 22.958500669344044,
-          "temperature": "偏贵",
-          "allocation": {
-            "equity_min": 20,
-            "equity_max": 40
-          }
-        },
-        "5y": {
-          "percentile": 13.74198717948718,
-          "temperature": "很贵",
-          "allocation": {
-            "equity_min": 20,
-            "equity_max": 40
-          }
-        },
-        "10y": {
-          "percentile": 50.1,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "all": {
-          "percentile": 55.47822983583155,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000929",
       "name": "中证原材料",
       "group": "行业",
-      "erp": 6.0736352490421455,
-      "pe": 13.05,
-      "date": "2026-11-18",
-      "percentile": 96.22,
-      "temperature": "便宜",
-      "history_start": "2016-09-02",
-      "dividend_spread": 0.9708000000000001,
-      "allocation": {
-        "equity_min": 80,
-        "equity_max": 100
-      },
-      "windows": {
-        "3y": {
-          "percentile": 98.59437751004016,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "5y": {
-          "percentile": 96.19391025641025,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "10y": {
-          "percentile": 96.22,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "all": {
-          "percentile": 96.29557036456292,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000930",
       "name": "中证工业",
       "group": "行业",
-      "erp": 4.467735190793459,
-      "pe": 16.51,
-      "date": "2026-11-18",
-      "percentile": 87.02,
-      "temperature": "便宜",
-      "history_start": "2011-06-28",
-      "dividend_spread": 0.6208,
-      "allocation": {
-        "equity_min": 60,
-        "equity_max": 80
-      },
-      "windows": {
-        "3y": {
-          "percentile": 65.79651941097724,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "5y": {
-          "percentile": 73.99839743589743,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "10y": {
-          "percentile": 87.02,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "all": {
-          "percentile": 91.43711018711018,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000931",
       "name": "中证可选消费",
       "group": "行业",
-      "erp": 4.218000929152149,
-      "pe": 17.22,
-      "date": "2026-11-18",
-      "percentile": 91.66,
-      "temperature": "便宜",
-      "history_start": "2011-06-28",
-      "dividend_spread": 1.5508000000000002,
-      "allocation": {
-        "equity_min": 80,
-        "equity_max": 100
-      },
-      "windows": {
-        "3y": {
-          "percentile": 80.38821954484605,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "5y": {
-          "percentile": 88.26121794871796,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "10y": {
-          "percentile": 91.66,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "all": {
-          "percentile": 94.5556133056133,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000932",
       "name": "中证主要消费",
       "group": "行业",
-      "erp": 2.893094935006724,
-      "pe": 22.31,
-      "date": "2026-11-18",
-      "percentile": 81.42,
-      "temperature": "便宜",
-      "history_start": "2011-06-28",
-      "dividend_spread": 2.1208,
-      "allocation": {
-        "equity_min": 60,
-        "equity_max": 80
-      },
-      "windows": {
-        "3y": {
-          "percentile": 37.81793842034806,
-          "temperature": "偏贵",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "5y": {
-          "percentile": 62.78044871794872,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "10y": {
-          "percentile": 81.42,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "all": {
-          "percentile": 87.72089397089398,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000933",
       "name": "中证医药卫生",
       "group": "行业",
-      "erp": 3.20236684235745,
-      "pe": 20.87,
-      "date": "2026-11-18",
-      "percentile": 99.98,
-      "temperature": "便宜",
-      "history_start": "2011-06-28",
-      "dividend_spread": 0.24080000000000013,
-      "allocation": {
-        "equity_min": 80,
-        "equity_max": 100
-      },
-      "windows": {
-        "3y": {
-          "percentile": 99.9330655957162,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "5y": {
-          "percentile": 99.9599358974359,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "10y": {
-          "percentile": 99.98,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "all": {
-          "percentile": 99.98700623700624,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000934",
       "name": "中证金融地产",
       "group": "行业",
-      "erp": 10.065811655011654,
-      "pe": 8.58,
-      "date": "2026-11-18",
-      "percentile": 51.25999999999999,
-      "temperature": "中性",
-      "history_start": "2011-06-28",
-      "dividend_spread": 2.3308,
-      "allocation": {
-        "equity_min": 40,
-        "equity_max": 60
-      },
-      "windows": {
-        "3y": {
-          "percentile": 22.021419009370817,
-          "temperature": "偏贵",
-          "allocation": {
-            "equity_min": 20,
-            "equity_max": 40
-          }
-        },
-        "5y": {
-          "percentile": 13.181089743589745,
-          "temperature": "很贵",
-          "allocation": {
-            "equity_min": 20,
-            "equity_max": 40
-          }
-        },
-        "10y": {
-          "percentile": 51.25999999999999,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "all": {
-          "percentile": 59.238565488565484,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000935",
       "name": "中证信息技术",
       "group": "行业",
-      "erp": 1.6670683165092801,
-      "pe": 30.71,
-      "date": "2026-11-18",
-      "percentile": 99.66000000000001,
-      "temperature": "便宜",
-      "history_start": "2011-06-28",
-      "dividend_spread": -0.8992,
-      "allocation": {
-        "equity_min": 80,
-        "equity_max": 100
-      },
-      "windows": {
-        "3y": {
-          "percentile": 99.53145917001339,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "5y": {
-          "percentile": 99.31891025641025,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "10y": {
-          "percentile": 99.66000000000001,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        },
-        "all": {
-          "percentile": 99.77910602910602,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 80,
-            "equity_max": 100
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000936",
       "name": "中证通信服务",
       "group": "行业",
-      "erp": 2.529416144975288,
-      "pe": 24.28,
-      "date": "2026-11-18",
-      "percentile": 89.46817420435511,
-      "temperature": "便宜",
-      "history_start": "2017-05-02",
-      "dividend_spread": -0.1392,
-      "allocation": {
-        "equity_min": 60,
-        "equity_max": 80
-      },
-      "windows": {
-        "3y": {
-          "percentile": 83.86880856760375,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "5y": {
-          "percentile": 79.84775641025641,
-          "temperature": "偏低",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "10y": {
-          "percentile": 89.46817420435511,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        },
-        "all": {
-          "percentile": 89.46817420435511,
-          "temperature": "便宜",
-          "allocation": {
-            "equity_min": 60,
-            "equity_max": 80
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     },
     {
       "code": "000937",
       "name": "中证公用事业",
       "group": "行业",
-      "erp": 2.9254726862302487,
-      "pe": 22.15,
-      "date": "2026-11-18",
-      "percentile": 57.78,
-      "temperature": "中性",
-      "history_start": "2011-06-28",
-      "dividend_spread": 1.2408000000000001,
-      "allocation": {
-        "equity_min": 40,
-        "equity_max": 60
-      },
-      "windows": {
-        "3y": {
-          "percentile": 15.595716198125837,
-          "temperature": "很贵",
-          "allocation": {
-            "equity_min": 20,
-            "equity_max": 40
-          }
-        },
-        "5y": {
-          "percentile": 48.99839743589743,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "10y": {
-          "percentile": 57.78,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        },
-        "all": {
-          "percentile": 54.71673596673596,
-          "temperature": "中性",
-          "allocation": {
-            "equity_min": 40,
-            "equity_max": 60
-          }
-        }
-      }
+      "erp": null,
+      "pe": null,
+      "date": null,
+      "percentile": null,
+      "temperature": "未知",
+      "history_start": null,
+      "allocation": null,
+      "dividend_spread": null,
+      "windows": {}
     }
   ],
-  "market": [
-    {
-      "code": "MKT_SH",
-      "name": "上证A股",
-      "latest": 1.2608000000000001,
-      "date": "2026-11-18",
-      "history_start": "2006-03-01"
-    },
-    {
-      "code": "MKT_SZ",
-      "name": "深证A股",
-      "latest": 0.6308000000000002,
-      "date": "2026-11-18",
-      "history_start": "2006-03-01"
-    },
-    {
-      "code": "MKT_GEM",
-      "name": "创业板",
-      "latest": -0.31919999999999993,
-      "date": "2026-11-18",
-      "history_start": "2009-11-02"
-    },
-    {
-      "code": "MKT_STAR",
-      "name": "科创板",
-      "latest": -0.9591999999999999,
-      "date": "2026-11-18",
-      "history_start": "2019-07-23"
-    }
-  ],
+  "market": [],
   "style": {
-    "latest": [
-      "2026-11-18",
-      3.5258858788270553
-    ],
-    "percentile": 23.54,
-    "signal": "小盘占优"
+    "latest": null,
+    "percentile": null,
+    "signal": "未知"
   },
   "quality": [
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "chinabond",
-      "status": "ok",
-      "rows": 108309,
-      "message": "from 20060101",
-      "duration_ms": 74504
+      "status": "fail",
+      "rows": 0,
+      "message": "HTTPSConnectionPool(host='yield.chinabond.com.cn', port=443): Max retries exceeded with url: /cbweb-pbc-web/pbc/historyQuery?startDate=2026-11-05&endDate=2026-11-19&gjqx=0&qxId=ycqx&locale=cn_ZH (Caused by NewConnectionError(\"HTTPSConnection(host='yield.chinabond.com.cn', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))",
+      "duration_ms": 0
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9006,
+      "rows": 9008,
       "message": "000300",
-      "duration_ms": 4309
+      "duration_ms": 2431
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000905",
-      "duration_ms": 2731
+      "duration_ms": 2907
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 8828,
+      "rows": 8830,
       "message": "000852",
-      "duration_ms": 2124
+      "duration_ms": 2415
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000985",
-      "duration_ms": 4207
+      "duration_ms": 2365
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000016",
-      "duration_ms": 3705
+      "duration_ms": 2427
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 3234,
+      "rows": 3236,
       "message": "000688",
-      "duration_ms": 1976
+      "duration_ms": 1719
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000922",
-      "duration_ms": 2587
+      "duration_ms": 2409
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000015",
-      "duration_ms": 4426
+      "duration_ms": 1891
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000906",
-      "duration_ms": 3275
+      "duration_ms": 1848
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000928",
-      "duration_ms": 3481
+      "duration_ms": 1876
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000929",
-      "duration_ms": 2630
+      "duration_ms": 2169
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000930",
-      "duration_ms": 2611
+      "duration_ms": 1693
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000931",
-      "duration_ms": 2549
+      "duration_ms": 1809
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000932",
-      "duration_ms": 1855
+      "duration_ms": 1581
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000933",
-      "duration_ms": 3027
+      "duration_ms": 1716
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000934",
-      "duration_ms": 2490
+      "duration_ms": 1695
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000935",
-      "duration_ms": 2518
+      "duration_ms": 1836
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000936",
-      "duration_ms": 2253
+      "duration_ms": 3249
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "csindex",
       "status": "ok",
-      "rows": 9008,
+      "rows": 9010,
       "message": "000937",
-      "duration_ms": 2165
+      "duration_ms": 1998
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 517,
+      "rows": 516,
       "message": "000300",
-      "duration_ms": 801
+      "duration_ms": 610
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 517,
+      "rows": 516,
       "message": "000905",
-      "duration_ms": 821
+      "duration_ms": 627
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 517,
+      "rows": 516,
       "message": "000852",
-      "duration_ms": 744
+      "duration_ms": 743
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 517,
+      "rows": 516,
       "message": "000016",
-      "duration_ms": 782
+      "duration_ms": 718
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 356,
       "message": "000688",
-      "duration_ms": 665
+      "duration_ms": 706
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 517,
+      "rows": 516,
       "message": "399006",
-      "duration_ms": 825
+      "duration_ms": 671
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 517,
+      "rows": 516,
       "message": "000922",
-      "duration_ms": 778
+      "duration_ms": 666
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "danjuan",
       "status": "ok",
-      "rows": 517,
+      "rows": 516,
       "message": "000015",
-      "duration_ms": 816
+      "duration_ms": 744
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "danjuan",
       "status": "ok",
       "rows": 0,
       "message": "000906",
-      "duration_ms": 670
+      "duration_ms": 653
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "danjuan_snapshot",
       "status": "ok",
       "rows": 63,
       "message": "",
-      "duration_ms": 631
+      "duration_ms": 558
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 260,
       "message": "000300",
-      "duration_ms": 1757
+      "duration_ms": 1867
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 239,
       "message": "000905",
-      "duration_ms": 1711
+      "duration_ms": 1468
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 146,
       "message": "000852",
-      "duration_ms": 1547
+      "duration_ms": 1630
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 263,
       "message": "000016",
-      "duration_ms": 1708
+      "duration_ms": 1540
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 263,
       "message": "000015",
-      "duration_ms": 1537
+      "duration_ms": 1499
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "legulegu",
       "status": "ok",
       "rows": 239,
       "message": "000906",
-      "duration_ms": 1721
+      "duration_ms": 1521
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "legulegu_gxl:MKT_GEM",
       "status": "ok",
-      "rows": 4141,
+      "rows": 4142,
       "message": "",
-      "duration_ms": 2057
+      "duration_ms": 1984
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "legulegu_gxl:MKT_SH",
       "status": "ok",
-      "rows": 5312,
+      "rows": 5313,
       "message": "",
-      "duration_ms": 2059
+      "duration_ms": 2009
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "legulegu_gxl:MKT_STAR",
       "status": "ok",
-      "rows": 1776,
+      "rows": 1777,
       "message": "",
-      "duration_ms": 2022
+      "duration_ms": 1819
     },
     {
-      "ts": "2026-11-18T17:28:07+00:00",
+      "ts": "2026-11-19T17:34:18+00:00",
       "source": "legulegu_gxl:MKT_SZ",
       "status": "ok",
-      "rows": 5312,
+      "rows": 5313,
       "message": "",
-      "duration_ms": 2164
+      "duration_ms": 2087
     }
   ]
 }
